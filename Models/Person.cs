@@ -8,33 +8,12 @@ namespace CreditKiosk.Models
 {
     public class Person
     {
-        public int FirstName
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public int Id { get; set; }
 
-        public int LastName
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public string FirstName { get; set; }
 
-        public int Id
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public string LastName { get; set; }
 
-        public void GetBalance()
-        {
-            throw new System.NotImplementedException();
-        }
+        public override string ToString() => $"{FirstName} {LastName}";
     }
 }

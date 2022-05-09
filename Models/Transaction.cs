@@ -8,27 +8,20 @@ namespace CreditKiosk.Models
 {
     public class Transaction
     {
-        public string? Id { get; set; } = null;
+        public int Id { get; set; }
 
         public DateTime Date { get; set; }
 
-        public Person Person { get; set; }
+        public int PersonId { get; set; }
+        public Person? Person { get; set; }
 
         public decimal Amount { get; set; }
 
-        public int Comment
-        {
-            get => default;
-            set
-            {
-            }
-        }
+        public string Comment { get; set; }
 
-        public Transaction(DateTime date, Person person, decimal amount)
+        public Transaction()
         {
-            Date = date;
-            Person = person;
-            Amount = amount;
+            Date = DateTime.Now;
         }
     }
 }
