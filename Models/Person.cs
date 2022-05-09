@@ -14,6 +14,21 @@ namespace CreditKiosk.Models
 
         public string LastName { get; set; }
 
+        public double Balance
+        {
+            get
+            {
+                using (var context = new KioskDbContext())
+                {
+                    double depositSum = context.Deposits.Where(p => p.PersonId == this.Id).Sum(i => i.Amount);
+                    double purchaseSum = context.Purchases.Where(p => p.PersonId == this.Id).Sum(i => i.Amount);
+                    double sum = depositSum - purchaseSum;
+                    return sum;
+                }
+            }
+        }
+
         public override string ToString() => $"{FirstName} {LastName}";
+
     }
 }

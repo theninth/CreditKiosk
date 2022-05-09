@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CreditKiosk.Migrations
 {
     [DbContext(typeof(KioskDbContext))]
-    [Migration("20220509094806_InitialCreate")]
+    [Migration("20220509120916_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,13 +28,14 @@ namespace CreditKiosk.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Comment")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("PersonId")
+                    b.Property<int>("PersonId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -60,7 +61,7 @@ namespace CreditKiosk.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Person");
+                    b.ToTable("Persons");
 
                     b.HasData(
                         new
@@ -89,7 +90,7 @@ namespace CreditKiosk.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductGroup");
+                    b.ToTable("ProductGroups");
 
                     b.HasData(
                         new
@@ -113,23 +114,24 @@ namespace CreditKiosk.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Comment")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("GroupId")
+                    b.Property<int>("PersonId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("PersonId")
+                    b.Property<int>("ProductGroupId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GroupId");
-
                     b.HasIndex("PersonId");
+
+                    b.HasIndex("ProductGroupId");
 
                     b.ToTable("Purchases");
                 });
@@ -138,26 +140,30 @@ namespace CreditKiosk.Migrations
                 {
                     b.HasOne("CreditKiosk.Models.Person", "Person")
                         .WithMany()
-                        .HasForeignKey("PersonId");
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Person");
                 });
 
             modelBuilder.Entity("CreditKiosk.Models.Purchase", b =>
                 {
-                    b.HasOne("CreditKiosk.Models.ProductGroup", "Group")
+                    b.HasOne("CreditKiosk.Models.Person", "Person")
                         .WithMany()
-                        .HasForeignKey("GroupId")
+                        .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CreditKiosk.Models.Person", "Person")
+                    b.HasOne("CreditKiosk.Models.ProductGroup", "ProductGroup")
                         .WithMany()
-                        .HasForeignKey("PersonId");
-
-                    b.Navigation("Group");
+                        .HasForeignKey("ProductGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Person");
+
+                    b.Navigation("ProductGroup");
                 });
 #pragma warning restore 612, 618
         }
