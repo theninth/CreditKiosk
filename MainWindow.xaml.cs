@@ -23,26 +23,24 @@ namespace CreditKiosk
     /// </summary>
     public partial class MainWindow : Window
     {
-        Managers.PersonManager personManager = new();
-        Managers.ProductGroupManager productGroupManager = new();
-        Managers.TransactionManager transactionManager = new();
+        Managers.PersonManager personManager;
+        Managers.ProductGroupManager productGroupManager;
+        Managers.TransactionManager transactionManager;
 
         public MainWindow()
         {
             InitializeComponent();
+
+            using (var context = new KioskDbContext())
+            {
+                context.Database.EnsureCreated();
+            }
+
+            productGroupManager = new();
+            personManager = new();
+            transactionManager = new();
             UpdateListBoxPerson();
 
-            //using (var context = new KioskDbContext())
-            //{
-            //    var person = context.Persons.First();
-            //    var deposit = new Deposit()
-            //    {
-            //        PersonId = person.Id,
-            //        Amount = -5,
-            //    };
-            //    transactionManager.Deposit(deposit);
-            //    Debug.WriteLine($"Saldo: {personManager.GetBalance(person)}");
-            //}
         }
 
         private void OpenPurchase()
@@ -74,7 +72,11 @@ namespace CreditKiosk
         private void UpdateListBoxPerson()
         {
             ListboxPersons.Items.Clear();
-            foreach (Person person in personManager.GetAllSorted())
+            List<Person> persons = personManager.GetAllSorted();
+
+            if (persons == null) return;
+
+            foreach (Person person in persons)
             {
                 ListboxPersons.Items.Add(person);
             }

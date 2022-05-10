@@ -1,29 +1,28 @@
 ﻿using CreditKiosk.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.IO;
 
 namespace CreditKiosk
 {
     public class KioskDbContext : DbContext
     {
-        public DbSet<Purchase> Purchases { get; set; }
-        public DbSet<Deposit> Deposits { get; set; }
+        public DbSet<Purchase>? Purchases { get; set; }
+        public DbSet<Deposit>? Deposits { get; set; }
 
-        public DbSet<Person> Persons { get; set; }
+        public DbSet<Person>? Persons { get; set; }
 
-        public DbSet<ProductGroup> ProductGroups { get; set; }
+        public DbSet<ProductGroup>? ProductGroups { get; set; }
 
         public string DbPath { get; }
 
         public KioskDbContext()
         {
-            var folder = Environment.SpecialFolder.LocalApplicationData;
-            var path = Environment.GetFolderPath(folder);
-            DbPath = System.IO.Path.Join(path, "pos.db");
+            string appName = (string)App.Current.Resources["AppName"];
+            string appDataFolder = Helpers.DataPaths.CreateAndGetAppDataFolder();
+            DbPath = Path.Join(appDataFolder, $"{appName}.db");
         }
 
-        // The following configures EF to create a Sqlite database file in the
-        // special "local" folder for your platform.
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseSqlite($"Data Source={DbPath}");
 
