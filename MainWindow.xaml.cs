@@ -45,6 +45,32 @@ namespace CreditKiosk
             //}
         }
 
+        private void OpenPurchase()
+        {
+            // This should not be able to happen because button should not be enabled.
+            if (ListboxPersons.SelectedItem == null) return;
+
+            PurchaseWindow.PurchaseWindow purchaseWindow = new()
+            {
+                ProductGroups = productGroupManager.GetList().ToArray(),
+                Person = (Person)ListboxPersons.SelectedItem
+            };
+            purchaseWindow.ShowDialog();
+
+            if (purchaseWindow.Purchases == null)
+            {
+                Debug.WriteLine("Purchase window ended without supplied purchase. I suppose user aborted?");
+                return;
+            }
+
+            foreach (Purchase? purchase in purchaseWindow.Purchases)
+            {
+                transactionManager.Purchase(purchase);
+            }
+
+            UpdateLabelBalance();
+        }
+
         private void UpdateListBoxPerson()
         {
             ListboxPersons.Items.Clear();
@@ -70,5 +96,9 @@ namespace CreditKiosk
         {
             UpdateLabelBalance();
         }
+
+        private void StartPurchase_Click(object sender, RoutedEventArgs e) => OpenPurchase();
+
+        private void ListboxPersons_MouseDoubleClick(object sender, MouseButtonEventArgs e) => OpenPurchase();
     }
 }

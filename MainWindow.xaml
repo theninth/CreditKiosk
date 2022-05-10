@@ -11,7 +11,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        <ListBox Name="ListboxPersons" SelectionChanged="ListboxPersons_SelectionChanged"/>
+        <ListBox Name="ListboxPersons" SelectionChanged="ListboxPersons_SelectionChanged" MouseDoubleClick="ListboxPersons_MouseDoubleClick"/>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                <RowDefinition Height="*" />
@@ -20,7 +20,7 @@
             </Grid.RowDefinitions>
             <Label Name="LabelBalance" Grid.Row="0" Margin="5" />
             <Button Name="StartCredit" Grid.Row="1" Margin="5">Kreditera</Button>
-            <Button Name="StartPurchase" Grid.Row="2" Margin="5">Påbörja köp</Button>
+            <Button Name="StartPurchase" Grid.Row="2" Margin="5" Click="StartPurchase_Click">Påbörja köp</Button>
         </Grid>
     </Grid>
 </Window>

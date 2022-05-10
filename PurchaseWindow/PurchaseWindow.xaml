@@ -1,0 +1,62 @@
+﻿<Window x:Class="CreditKiosk.PurchaseWindow.PurchaseWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CreditKiosk.PurchaseWindow" xmlns:usercontrols="clr-namespace:CreditKiosk.UserControls"
+        mc:Ignorable="d"
+        Title="Inköp" Height="450" Width="800">
+    <Window.Resources>
+        <SolidColorBrush x:Key="AbortColor" Color="Pink"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Shows name om person making purchase and their balance -->
+        <DockPanel Grid.ColumnSpan="4">
+            <Label Name="LblName" DockPanel.Dock="Left">Förnamn Efternamn</Label>
+            <Label Name="LblBalance" DockPanel.Dock="Left">Saldo: X kr</Label>
+        </DockPanel>
+        
+        <!-- Contain items in shopping cart -->
+        <ListView Name="LvItems" Grid.Row="1" Grid.ColumnSpan="2">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="150" Header="Produktgrupp" DisplayMemberBinding="{Binding ProductGroup.Name}"/>
+                    <GridViewColumn Width="100" Header="Summa" DisplayMemberBinding="{Binding Amount, StringFormat=N2}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <!-- Shows current total and more -->
+        <StackPanel Grid.Row="2">
+            <StackPanel Orientation="Horizontal">
+                <TextBox Name="TbxItemAmount"
+                         MinWidth="100"
+                         TextChanged="TbxItemAmount_TextChanged" />
+                <Label>Kr.</Label>
+            </StackPanel>
+            <Label Name="LblTotal">Totalt: X Kr</Label>
+        </StackPanel>
+        
+        <!-- Contains numpad -->
+        <usercontrols:NumPad x:Name="NumPadAmount" Grid.Row="3" Grid.Column="1"/>
+        
+        <!-- Contains the two button columns to the right of screen -->
+        <StackPanel Name="ProductGroupButtons" Grid.Row="1" Grid.RowSpan="2" Grid.Column="2" /><!-- Will have buttons added dynamically -->
+        <StackPanel Name="MiscButtons" Grid.Column="3" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Bottom">
+            <Button Name="BtnAbort" Margin="5" Background="{DynamicResource AbortColor}" Click="BtnAbort_Click">Avbryt</Button>
+            <Button Name="BtnPay" Margin="5" IsEnabled="False" Click="BtnPay_Click" Height="50">Betala</Button>
+        </StackPanel>
+    </Grid>
+</Window>
