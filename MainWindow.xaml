@@ -3,9 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CreditKiosk" xmlns:UserControls="clr-namespace:CreditKiosk.UserControls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Lägerkiosk" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -20,9 +19,9 @@
                <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
             <Label Name="LabelBalance" Grid.Row="0" Margin="5" />
-            <Button Name="Persons" Grid.Row="1" Margin="5" MinHeight="40">Kunder</Button>
-            <Button Name="StartCredit" Grid.Row="2" Margin="5" MinHeight="40">Kreditera</Button>
-            <Button Name="StartPurchase" Grid.Row="3" Margin="5" MinHeight="80" Click="StartPurchase_Click">Påbörja köp</Button>
+            <Button Name="BtnPersons" Grid.Row="1" Margin="5" MinHeight="40" Click="BtnPersons_Click">Kunder</Button>
+            <Button Name="BtnStartCredit" Grid.Row="2" Margin="5" MinHeight="40">Kreditera</Button>
+            <Button Name="BtnStartPurchase" Grid.Row="3" Margin="5" MinHeight="80" Click="BtnStartPurchase_Click">Påbörja köp</Button>
         </Grid>
     </Grid>
 </Window>

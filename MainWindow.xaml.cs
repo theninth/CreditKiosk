@@ -1,4 +1,6 @@
-﻿using CreditKiosk.Models;
+﻿using CreditKiosk.Events;
+using CreditKiosk.Models;
+using CreditKiosk.Persons;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
@@ -83,12 +85,46 @@ namespace CreditKiosk
             LabelBalance.Content = $"Saldo: {balance} Kr.";
         }
 
+
+        // Custom events
+        private void OnPersonAdded(object source, PersonAddEventArgs e)
+        {
+            if (e.Person != null) personManager.Add((Person)e.Person);
+            if (e.Person != null && e.InitialDeposit > 0)
+            {
+                Deposit deposit = new()
+                {
+                    PersonId = e.Person.Id,
+                    Amount = e.InitialDeposit,
+                    Comment = "Startkredit"
+                };
+                transactionManager.Deposit(deposit);
+            }
+
+            UpdateListBoxPerson();
+        }
+
+        private void OnPersonDeleted(object source, PersonEventArgs e)
+        {
+            if (e.Person != null) personManager.Remove((Person)e.Person);
+            UpdateListBoxPerson();
+        }
+
+        // GUI events
+        private void BtnPersons_Click(object sender, RoutedEventArgs e)
+        {
+            PersonsWindow frm = new PersonsWindow(personManager.GetAll());
+            frm.PersonAdded += OnPersonAdded;
+            frm.PersonDeleted += OnPersonDeleted;
+            frm.ShowDialog();
+        }
+
+        private void BtnStartPurchase_Click(object sender, RoutedEventArgs e) => OpenPurchase();
+
         private void ListboxPersons_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateLabelBalance();
         }
-
-        private void StartPurchase_Click(object sender, RoutedEventArgs e) => OpenPurchase();
 
         private void ListboxPersons_MouseDoubleClick(object sender, MouseButtonEventArgs e) => OpenPurchase();
     }

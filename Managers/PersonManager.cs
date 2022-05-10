@@ -1,6 +1,5 @@
 ﻿using CreditKiosk.Models;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 
 namespace CreditKiosk.Managers
