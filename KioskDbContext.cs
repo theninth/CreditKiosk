@@ -1,6 +1,5 @@
 ﻿using CreditKiosk.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.IO;
 
 namespace CreditKiosk
@@ -33,6 +32,9 @@ namespace CreditKiosk
 
             modelBuilder.Entity<Person>().HasData(new Person { Id = 1, FirstName = "Testperson", LastName = "1" });
             modelBuilder.Entity<Person>().HasData(new Person { Id = 2, FirstName = "Testperson", LastName = "2"});
+
+            modelBuilder.Entity<Deposit>().HasData(new Deposit { Id = 1, PersonId = 1, Amount = 150, Comment = "Startkredit" });
+            modelBuilder.Entity<Deposit>().HasData(new Deposit { Id = 2, PersonId = 2, Amount = 150, Comment = "Startkredit" });
         }
     }
 }
