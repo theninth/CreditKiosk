@@ -46,7 +46,7 @@
                          TextChanged="TbxItemAmount_TextChanged" />
                 <Label>Kr.</Label>
             </StackPanel>
-            <Label Name="LblTotal">Totalt: X Kr</Label>
+            <Label Name="LblTotal">Totalt: 0.00 Kr</Label>
         </StackPanel>
         
         <!-- Contains numpad -->
