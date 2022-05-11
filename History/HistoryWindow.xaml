@@ -1,0 +1,69 @@
+﻿<Window x:Class="CreditKiosk.History.HistoryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CreditKiosk.History"
+        mc:Ignorable="d"
+        Title="Historik" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="20" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="5*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Persons -->
+        <DockPanel Grid.Row="0"  Grid.RowSpan="2" Margin="5">
+            <Label DockPanel.Dock="Top">Kunder</Label>
+            <ListBox Name="LbPersons" DockPanel.Dock="Bottom" SelectionChanged="LbPersons_SelectionChanged" />
+        </DockPanel>
+        
+
+        <!-- Deposits -->
+        <DockPanel Grid.Row="0" Grid.Column="2" Margin="5">
+            <Label DockPanel.Dock="Top">Insättningar</Label>
+            <ListView Name="LvDeposits" DockPanel.Dock="Bottom" SelectionChanged="LvDeposits_SelectionChanged">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="150" Header="Datum/tid" DisplayMemberBinding="{Binding Date, StringFormat=f}"/>
+                        <GridViewColumn Width="100" Header="Summa" DisplayMemberBinding="{Binding Amount, StringFormat=N2}"/>
+                        <GridViewColumn Width="300" Header="Kommentar" DisplayMemberBinding="{Binding Comment}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </DockPanel>
+
+        <!-- Purchases -->
+        <DockPanel Grid.Row="1" Grid.Column="2" Margin="5">
+            <Label DockPanel.Dock="Top">Inköp</Label>
+            <ListView Name="LvPurchases" DockPanel.Dock="Bottom" SelectionChanged="LvPurchases_SelectionChanged">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="50" Header="Köpnr" DisplayMemberBinding="{Binding Id}"/>
+                        <GridViewColumn Width="150" Header="Datum/tid" DisplayMemberBinding="{Binding Date, StringFormat=f}"/>
+                        <GridViewColumn Width="100" Header="Summa" DisplayMemberBinding="{Binding Amount, StringFormat=N2}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </DockPanel>
+        
+
+        <!-- Buttons -->
+        <Grid Grid.Row="3" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+            <Button Name="BtnCredit" Grid.Column="0" Margin="5" MinWidth="60" MinHeight="60" IsEnabled="False" Click="BtnCredit_Click">Kreditera</Button>
+            <Button Name="BtnDone" Grid.Column="3" Margin="5" MinWidth="80" MinHeight="60" Click="BtnDone_Click">Klar</Button>
+        </Grid>
+    </Grid>
+</Window>

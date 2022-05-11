@@ -1,4 +1,5 @@
 ﻿using CreditKiosk.Events;
+using CreditKiosk.History;
 using CreditKiosk.Models;
 using CreditKiosk.Persons;
 using CreditKiosk.ProductGroups;
@@ -32,7 +33,6 @@ namespace CreditKiosk
             personManager = new();
             transactionManager = new();
             UpdateListBoxPerson();
-
         }
 
         private void OpenPurchase()
@@ -152,6 +152,14 @@ namespace CreditKiosk
             frm.ShowDialog();
         }
 
+        private void BtnHistory_Click(object sender, RoutedEventArgs e)
+        {
+            int selectedIndex = ListboxPersons.SelectedIndex;
+
+            HistoryWindow frm = new(personManager.GetAll(), selectedIndex);
+            frm.ShowDialog();
+        }
+
         private void BtnStartPurchase_Click(object sender, RoutedEventArgs e) => OpenPurchase();
 
         private void ListboxPersons_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -161,7 +169,5 @@ namespace CreditKiosk
         }
 
         private void ListboxPersons_MouseDoubleClick(object sender, MouseButtonEventArgs e) => OpenPurchase();
-
-
     }
 }
