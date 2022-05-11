@@ -1,0 +1,29 @@
+﻿<Window x:Class="CreditKiosk.ProductGroups.ProductGroupAddWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CreditKiosk.ProductGroups"
+        mc:Ignorable="d"
+        Title="Lägg till produktgrupp" Height="200" Width="200" MinWidth="200" MinHeight="180">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto" />
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Margin="5">Namn:</Label>
+        <TextBox Name="TbxName" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="5" TextChanged="TbxName_TextChanged"/>
+
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Name="BtnCancel" Margin="5" Click="BtnCancel_Click">Avbryt</Button>
+            <Button Name="BtnAdd" Margin="5" Click="BtnAdd_Click">Lägg Till</Button>
+        </StackPanel>
+    </Grid>
+</Window>

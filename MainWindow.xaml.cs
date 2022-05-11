@@ -1,6 +1,7 @@
 ﻿using CreditKiosk.Events;
 using CreditKiosk.Models;
 using CreditKiosk.Persons;
+using CreditKiosk.ProductGroups;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
@@ -41,7 +42,7 @@ namespace CreditKiosk
 
             PurchaseWindow.PurchaseWindow purchaseWindow = new()
             {
-                ProductGroups = productGroupManager.GetList().ToArray(),
+                ProductGroups = productGroupManager.GetAll().ToArray(),
                 Person = (Person)ListboxPersons.SelectedItem
             };
             purchaseWindow.ShowDialog();
@@ -86,7 +87,20 @@ namespace CreditKiosk
         }
 
 
-        // Custom events
+        /* ***************
+         * CUSTOM EVENTS *
+         *************** */
+
+        private void OnProductGroupAdded(object source, ProductGroupEventArgs e)
+        {
+            if (e.ProductGroup != null) productGroupManager.Add(e.ProductGroup);
+        }
+
+        private void OnProductGroupDeleted(object source, ProductGroupEventArgs e)
+        {
+            if (e.ProductGroup != null) productGroupManager.Remove(e.ProductGroup);
+        }
+
         private void OnPersonAdded(object source, PersonAddEventArgs e)
         {
             if (e.Person != null) personManager.Add((Person)e.Person);
@@ -110,7 +124,19 @@ namespace CreditKiosk
             UpdateListBoxPerson();
         }
 
-        // GUI events
+        /* ************
+         * GUI EVENTS *
+         ************ */
+
+
+        private void BtnProductGroups_Click(object sender, RoutedEventArgs e)
+        {
+            ProductGroupsWindow frm = new(productGroupManager.GetAll());
+            frm.ProductGroupAdded += OnProductGroupAdded;
+            frm.ProductGroupDeleted += OnProductGroupDeleted;
+            frm.ShowDialog();
+        }
+
         private void BtnPersons_Click(object sender, RoutedEventArgs e)
         {
             PersonsWindow frm = new PersonsWindow(personManager.GetAll());
@@ -127,5 +153,7 @@ namespace CreditKiosk
         }
 
         private void ListboxPersons_MouseDoubleClick(object sender, MouseButtonEventArgs e) => OpenPurchase();
+
+
     }
 }

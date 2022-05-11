@@ -24,7 +24,7 @@ namespace CreditKiosk.Managers
             }
         }
 
-        public List<ProductGroup> GetList()
+        public List<ProductGroup> GetAll()
         {
             using (var context = new KioskDbContext())
             {
