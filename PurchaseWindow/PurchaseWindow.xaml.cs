@@ -113,6 +113,12 @@ namespace CreditKiosk.PurchaseWindow
             }
         }
 
+        private void UpdateDeleteButton()
+        {
+            bool itemSelected = LvItems.SelectedIndex >= 0;
+            BtnDelete.IsEnabled = itemSelected;
+        }
+
         private void UpdatePersonElements()
         {
             if (person == null) return;
@@ -201,11 +207,16 @@ namespace CreditKiosk.PurchaseWindow
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (LvItems.SelectedIndex > 0)
+            if (LvItems.SelectedIndex >= 0)
             {
                 LvItems.Items.RemoveAt(LvItems.SelectedIndex);
                 UpdateTotal();
             }
+        }
+
+        private void LvItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateDeleteButton();
         }
     }
 }
