@@ -61,6 +61,13 @@ namespace CreditKiosk
             UpdateLabelBalance();
         }
 
+        private void UpdateBtnVisibility()
+        {
+            bool itemIsSelected = ListboxPersons.SelectedIndex >= 0;
+            BtnStartPurchase.IsEnabled = itemIsSelected;
+            BtnHistory.IsEnabled = itemIsSelected;
+        }
+
         private void UpdateListBoxPerson()
         {
             ListboxPersons.Items.Clear();
@@ -149,6 +156,7 @@ namespace CreditKiosk
 
         private void ListboxPersons_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            UpdateBtnVisibility();
             UpdateLabelBalance();
         }
 

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CreditKiosk.ProductGroups"
         mc:Ignorable="d"
-        Title="ProductGroupsWindow" Height="450" Width="800">
+        Title="Produktgrupper" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="5*" />

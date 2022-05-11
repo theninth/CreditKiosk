@@ -105,6 +105,9 @@ namespace CreditKiosk.PurchaseWindow
                     button.Content = group.Name;
                     button.ConnectedProductGroup = group;
                     button.Click += BtnProductGroup_Click;
+                    button.MinHeight = 60;
+                    button.MinWidth = 60;
+                    button.Margin = new Thickness(5, 5, 5, 5);
                     ProductGroupButtons.Children.Add(button);
                 }
             }

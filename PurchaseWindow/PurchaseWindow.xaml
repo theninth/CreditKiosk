@@ -5,13 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CreditKiosk.PurchaseWindow" xmlns:usercontrols="clr-namespace:CreditKiosk.UserControls"
         mc:Ignorable="d"
-        Title="Inköp" Height="450" Width="800">
+        Title="Inköp" Height="450" Width="800" MinHeight="450" MinWidth="800">
     <Window.Resources>
         <SolidColorBrush x:Key="AbortColor" Color="Pink"/>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="auto" />
@@ -29,7 +30,7 @@
         </DockPanel>
         
         <!-- Contain items in shopping cart -->
-        <ListView Name="LvItems" Grid.Row="1" Grid.ColumnSpan="2">
+        <ListView Name="LvItems" Grid.Row="1" Grid.ColumnSpan="3" Margin="5">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="150" Header="Produktgrupp" DisplayMemberBinding="{Binding ProductGroup.Name}"/>
@@ -43,20 +44,25 @@
             <StackPanel Orientation="Horizontal">
                 <TextBox Name="TbxItemAmount"
                          MinWidth="100"
+                         Margin="5"
                          TextChanged="TbxItemAmount_TextChanged" />
-                <Label>Kr.</Label>
+                <Label Margin="5">Kr.</Label>
             </StackPanel>
-            <Label Name="LblTotal">Totalt: 0.00 Kr</Label>
+            <Label Margin="5" Name="LblTotal">Totalt: 0.00 Kr</Label>
         </StackPanel>
         
         <!-- Contains numpad -->
         <usercontrols:NumPad x:Name="NumPadAmount" Grid.Row="3" Grid.Column="1"/>
         
         <!-- Contains the two button columns to the right of screen -->
-        <StackPanel Name="ProductGroupButtons" Grid.Row="1" Grid.RowSpan="2" Grid.Column="2" /><!-- Will have buttons added dynamically -->
-        <StackPanel Name="MiscButtons" Grid.Column="3" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Bottom">
-            <Button Name="BtnAbort" Margin="5" Background="{DynamicResource AbortColor}" Click="BtnAbort_Click">Avbryt</Button>
-            <Button Name="BtnPay" Margin="5" IsEnabled="False" Click="BtnPay_Click" Height="50">Betala</Button>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" Grid.RowSpan="2" Grid.Column="3" >
+            <!-- Will have buttons added dynamically -->
+            <StackPanel Name="ProductGroupButtons" />
+        </ScrollViewer>
+        
+        <StackPanel Name="MiscButtons" Grid.Column="4" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Bottom">
+            <Button Name="BtnAbort" Margin="5" Background="{DynamicResource AbortColor}" MinHeight="40" MinWidth="80" Click="BtnAbort_Click">Avbryt</Button>
+            <Button Name="BtnPay" Margin="5" IsEnabled="False" MinHeight="100" MinWidth="80" Click="BtnPay_Click" Height="50">Betala</Button>
         </StackPanel>
     </Grid>
 </Window>

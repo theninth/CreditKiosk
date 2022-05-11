@@ -31,8 +31,8 @@
         <Label Grid.Row="2" Grid.Column="2" Margin="5">Kr</Label>
         
         <StackPanel Grid.Row="4" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Name="BtnCancel" Margin="5" Click="BtnCancel_Click">Avbryt</Button>
-            <Button Name="BtnAdd" Margin="5" Click="BtnAdd_Click">Lägg Till</Button>
+            <Button Name="BtnCancel" Margin="5" MinHeight="40" MinWidth="60" Click="BtnCancel_Click">Avbryt</Button>
+            <Button Name="BtnAdd" Margin="5" MinHeight="40" MinWidth="80" Click="BtnAdd_Click">Lägg Till</Button>
         </StackPanel>
     </Grid>
 </Window>
