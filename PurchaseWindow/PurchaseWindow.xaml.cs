@@ -198,6 +198,15 @@ namespace CreditKiosk.PurchaseWindow
             Purchases = purchases;
             this.Close();
         }
+
+        private void BtnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (LvItems.SelectedIndex > 0)
+            {
+                LvItems.Items.RemoveAt(LvItems.SelectedIndex);
+                UpdateTotal();
+            }
+        }
     }
 }
 

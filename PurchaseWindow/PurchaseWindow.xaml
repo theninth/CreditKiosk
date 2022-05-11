@@ -61,6 +61,7 @@
         </ScrollViewer>
         
         <StackPanel Name="MiscButtons" Grid.Column="4" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Bottom">
+            <Button Name="BtnDelete" Margin="5" MinHeight="40" MinWidth="80" Click="BtnDelete_Click">Ta bort!</Button>
             <Button Name="BtnAbort" Margin="5" Background="{DynamicResource AbortColor}" MinHeight="40" MinWidth="80" Click="BtnAbort_Click">Avbryt</Button>
             <Button Name="BtnPay" Margin="5" IsEnabled="False" MinHeight="100" MinWidth="80" Click="BtnPay_Click" Height="50">Betala</Button>
         </StackPanel>
