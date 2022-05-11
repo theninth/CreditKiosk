@@ -65,8 +65,9 @@ namespace CreditKiosk
         private void UpdateBtnVisibility()
         {
             bool itemIsSelected = ListboxPersons.SelectedIndex >= 0;
-            BtnStartPurchase.IsEnabled = itemIsSelected;
+            BtnDeposit.IsEnabled = itemIsSelected;
             BtnHistory.IsEnabled = itemIsSelected;
+            BtnStartPurchase.IsEnabled = itemIsSelected;
         }
 
         private void UpdateListBoxPerson()
@@ -186,5 +187,21 @@ namespace CreditKiosk
         }
 
         private void ListboxPersons_MouseDoubleClick(object sender, MouseButtonEventArgs e) => OpenPurchase();
+
+        private void BtnDeposit_Click(object sender, RoutedEventArgs e)
+        {
+            Person selectedPerson = (Person)ListboxPersons.SelectedItem;
+
+            if (selectedPerson == null) return;
+
+            DepositWindow.DepositWindow frm = new(selectedPerson);
+            frm.ShowDialog();
+
+            if (frm.DialogResult != null && (bool)frm.DialogResult && frm.Deposit != null)
+            {
+                transactionManager.Deposit(frm.Deposit);
+            }
+            UpdateLabelBalance();
+        }
     }
 }

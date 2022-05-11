@@ -9,7 +9,6 @@ namespace CreditKiosk.Models
 
         public override string ToString()
         {
-
             return $"{ProductGroup.ToString()} {Amount:n2} Kr ({Date:f})";
         }
     }

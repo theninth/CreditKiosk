@@ -19,12 +19,14 @@
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
             <Label Name="LabelBalance" Grid.Row="0" Margin="5" />
-            <Button Name="BtnPersons" Grid.Row="1" Margin="5" MinHeight="40" Click="BtnPersons_Click">Kunder</Button>
-            <Button Name="BtnProductGroups" Grid.Row="2" Margin="5" MinHeight="40" Click="BtnProductGroups_Click">Produktgrupper</Button>
-            <Button Name="BtnHistory" Grid.Row="3" Margin="5 5 5 55" MinHeight="40" IsEnabled="False" Click="BtnHistory_Click">Historik</Button>
-            <Button Name="BtnStartPurchase" Grid.Row="4" Margin="5" MinHeight="80" Click="BtnStartPurchase_Click" IsEnabled="False">Påbörja köp</Button>
+            <Button Name="BtnDeposit" Grid.Row="1" Margin="5" MinHeight="40" Click="BtnDeposit_Click" IsEnabled="False">Insättning</Button>
+            <Button Name="BtnPersons" Grid.Row="2" Margin="5" MinHeight="40" Click="BtnPersons_Click">Kunder</Button>
+            <Button Name="BtnProductGroups" Grid.Row="3" Margin="5" MinHeight="40" Click="BtnProductGroups_Click">Produktgrupper</Button>
+            <Button Name="BtnHistory" Grid.Row="4" Margin="5 5 5 55" MinHeight="40" IsEnabled="False" Click="BtnHistory_Click">Historik</Button>
+            <Button Name="BtnStartPurchase" Grid.Row="5" Margin="5" MinHeight="80" Click="BtnStartPurchase_Click" IsEnabled="False">Påbörja köp</Button>
         </Grid>
     </Grid>
 </Window>
