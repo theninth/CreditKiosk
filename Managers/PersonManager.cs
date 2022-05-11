@@ -24,19 +24,11 @@ namespace CreditKiosk.Managers
             }
         }
 
-        public List<Person> GetAll()
-        {
-            using (var context = new KioskDbContext())
-            {
-                return context.Persons.ToList();
-            }
-        }
-
         public List<Person> GetAllSorted()
         {
             using (var context = new KioskDbContext())
             {
-                return context.Persons.OrderBy(p => p.LastName).ThenByDescending(p => p.FirstName).ToList();
+                return context.Persons.OrderBy(p => p.FirstName).ThenBy(p => p.LastName).ToList();
             }
         }
     }

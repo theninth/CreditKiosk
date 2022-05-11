@@ -163,7 +163,7 @@ namespace CreditKiosk
 
         private void BtnPersons_Click(object sender, RoutedEventArgs e)
         {
-            PersonsWindow frm = new PersonsWindow(personManager.GetAll());
+            PersonsWindow frm = new PersonsWindow(personManager.GetAllSorted());
             frm.PersonAdded += OnPersonAdded;
             frm.PersonDeleted += OnPersonDeleted;
             frm.ShowDialog();
@@ -171,9 +171,9 @@ namespace CreditKiosk
 
         private void BtnHistory_Click(object sender, RoutedEventArgs e)
         {
-            int selectedIndex = ListboxPersons.SelectedIndex;
+            Person selectedPerson = (Person)ListboxPersons.SelectedItem;
 
-            HistoryWindow frm = new(personManager.GetAll(), selectedIndex);
+            HistoryWindow frm = new(personManager.GetAllSorted(), selectedPerson);
             frm.PersonCredited += OnPersonCredited;
             frm.ShowDialog();
         }

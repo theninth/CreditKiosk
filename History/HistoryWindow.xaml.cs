@@ -24,22 +24,21 @@ namespace CreditKiosk.History
     {
         public List<Person> Persons { get; set; }
 
-        public HistoryWindow(List<Person> persons, int selectedIndex)
+        public HistoryWindow(List<Person> persons, Person selectedPerson)
         {
             this.Persons = persons;
             InitializeComponent();
 
             UpdateLbPersons();
 
-            if (selectedIndex >= 0) SelectPersonByIdx(selectedIndex);
+            LbPersons.SelectedItem = LbPersons.Items
+                .Cast<Person>()
+                .ToList()
+                .Where(i => i.Id == selectedPerson.Id)
+                .Single();
         }
 
         public event EventHandler<CreditEventArgs>? PersonCredited;
-
-        private void SelectPersonByIdx(int selectedIndex)
-        {
-            LbPersons.SelectedIndex = selectedIndex;
-        }
 
         private void UpdateLbPersons()
         {
