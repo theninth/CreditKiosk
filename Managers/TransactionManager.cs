@@ -1,6 +1,5 @@
 ﻿using CreditKiosk.Models;
-using System.Collections.Generic;
-using System.Linq;
+using System;
 
 namespace CreditKiosk.Managers
 {
@@ -27,10 +26,17 @@ namespace CreditKiosk.Managers
         public void Credit(Purchase purchase, double amount)
         {
             Deposit creditDeposit = new Deposit();
-            
+
+            if (amount > purchase.Amount)
+            {
+                throw new Exception("Kan inte kreditera ett högre belopp än urspringsköpet!");
+            }
+
             creditDeposit.PersonId = purchase.PersonId;
             creditDeposit.Amount = amount;
             creditDeposit.Comment = $"Kreditering av köp {purchase.Id}";
+
+            Deposit(creditDeposit);
         }
     }
 }

@@ -3,6 +3,7 @@ using CreditKiosk.History;
 using CreditKiosk.Models;
 using CreditKiosk.Persons;
 using CreditKiosk.ProductGroups;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
@@ -131,6 +132,21 @@ namespace CreditKiosk
             UpdateListBoxPerson();
         }
 
+        private void OnPersonCredited(object source, CreditEventArgs e)
+        {
+            if (e.Purchase == null) return;
+
+            try
+            {
+                transactionManager.Credit(e.Purchase, e.Amount);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Fel!");
+            }
+            UpdateLabelBalance();
+        }
+
         /* ************
          * GUI EVENTS *
          ************ */
@@ -157,6 +173,7 @@ namespace CreditKiosk
             int selectedIndex = ListboxPersons.SelectedIndex;
 
             HistoryWindow frm = new(personManager.GetAll(), selectedIndex);
+            frm.PersonCredited += OnPersonCredited;
             frm.ShowDialog();
         }
 

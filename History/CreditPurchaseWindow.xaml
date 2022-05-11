@@ -1,0 +1,44 @@
+﻿<Window x:Class="CreditKiosk.History.CreditPurchaseWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CreditKiosk.History"
+        mc:Ignorable="d"
+        Title="Kreditering" Height="280" Width="400" MinWidth="350" MinHeight="220">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Sum to credit -->
+        <Label Grid.Row="0" Grid.Column="0" Margin="5,5,5,5" Grid.ColumnSpan="2">Summa att kreditera:</Label>
+        <TextBox Name="TbxAmount" Grid.Row="0" Grid.Column="2" Margin="5,5,5,5"/>
+        <Label Grid.Row="0" Grid.Column="3" Margin="5,5,5,5">Kr</Label>
+
+        <!-- Purchase -->
+        <Label Grid.Row="2" Grid.Column="0" Margin="5,5,5,5" Grid.ColumnSpan="2">Inköp:</Label>
+        <Label Name="LblPurchase" Grid.Row="2" Grid.Column="1" Margin="5,5,5,5" Grid.ColumnSpan="3"></Label>
+
+        <!-- Person -->
+        <Label Grid.Row="3" Grid.Column="0" Margin="5,5,5,5" Grid.ColumnSpan="2">Person:</Label>
+        <Label Name="LblPerson" Grid.Row="3" Grid.Column="1" Margin="5,5,5,5" Grid.ColumnSpan="3"></Label>
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="5" Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
+            <Button Name="BtnCancel" Margin="5" MinHeight="40" MinWidth="60" Click="BtnCancel_Click">Avbryt</Button>
+            <Button Name="BtnCredit" Margin="5" MinHeight="40" MinWidth="80" Click="BtnCredit_Click">Kreditera</Button>
+        </StackPanel>
+    </Grid>
+</Window>

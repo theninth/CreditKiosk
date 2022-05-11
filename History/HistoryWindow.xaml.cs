@@ -1,4 +1,6 @@
-﻿using CreditKiosk.Models;
+﻿using CreditKiosk.Events;
+using CreditKiosk.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +34,8 @@ namespace CreditKiosk.History
             if (selectedIndex >= 0) SelectPersonByIdx(selectedIndex);
         }
 
+        public event EventHandler<CreditEventArgs>? PersonCredited;
+
         private void SelectPersonByIdx(int selectedIndex)
         {
             LbPersons.SelectedIndex = selectedIndex;
@@ -46,6 +50,18 @@ namespace CreditKiosk.History
             }
         }
 
+        private void UpdateLblBalance(Person? person)
+        {
+            if (person == null)
+            {
+                LblBalance.Content = string.Empty;
+            }
+            else
+            {
+                LblBalance.Content = $"Saldo: {person.Balance} kr";
+            }
+        }
+
         private void UpdateLvDepositsAndPurchases(Person person)
         {
             using (var context = new KioskDbContext())
@@ -55,8 +71,15 @@ namespace CreditKiosk.History
                     throw new Exception("Neither Deposits nor Purchases should be null here. What happened?");
                 }
 
-                List<Deposit>? deposits = context.Deposits.Where(p => p.PersonId == person.Id).ToList();
-                List<Purchase>? purchases = context.Purchases.Where(p => p.PersonId == person.Id).ToList();
+                List<Deposit>? deposits = context.Deposits
+                    .Where(p => p.PersonId == person.Id)
+                    .ToList();
+
+                List<Purchase>? purchases = context.Purchases
+                    .Where(p => p.PersonId == person.Id)
+                    .Include(d => d.Person)
+                    .Include(d => d.ProductGroup)
+                    .ToList();
 
                 LvDeposits.Items.Clear();
                 foreach (Deposit? deposit in deposits)
@@ -72,13 +95,29 @@ namespace CreditKiosk.History
             }
         }
 
+        protected virtual void OnCredit(CreditEventArgs e) => PersonCredited?.Invoke(this, e);
+
+
         /* ************
         * GUI EVENTS *
         ************ */
 
         private void BtnCredit_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            Purchase purchase = (Purchase)LvPurchases.SelectedItem;
+            
+            if (purchase == null) return;
+            
+            CreditPurchaseWindow frm = new(purchase);
+            frm.ShowDialog();
+            
+            if (frm.DialogResult != null && (bool)frm.DialogResult)
+            {
+                CreditEventArgs creditEventArgs = new(frm.Purchase, frm.Amount);
+                OnCredit(creditEventArgs);
+                Close();
+            }
+            
         }
 
         private void BtnDone_Click(object sender, RoutedEventArgs e)
@@ -93,7 +132,9 @@ namespace CreditKiosk.History
             {
                 UpdateLvDepositsAndPurchases(selectedPerson);
             }
-            
+
+            UpdateLblBalance(selectedPerson);
+
         }
 
         private void LvDeposits_SelectionChanged(object sender, SelectionChangedEventArgs e)

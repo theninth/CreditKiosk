@@ -42,5 +42,10 @@ namespace CreditKiosk.Models
                 }
             }
         }
+
+        public override string ToString()
+        {
+            return name;
+        }
     }
 }

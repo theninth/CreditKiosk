@@ -10,7 +10,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="20" />
+            <RowDefinition Height="40" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -46,13 +46,16 @@
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Width="50" Header="Köpnr" DisplayMemberBinding="{Binding Id}"/>
-                        <GridViewColumn Width="150" Header="Datum/tid" DisplayMemberBinding="{Binding Date, StringFormat=f}"/>
+                        <GridViewColumn Width="180" Header="Datum/tid" DisplayMemberBinding="{Binding Date, StringFormat=f}"/>
+                        <GridViewColumn Width="100" Header="Produktgrupp" DisplayMemberBinding="{Binding ProductGroup}"/>
                         <GridViewColumn Width="100" Header="Summa" DisplayMemberBinding="{Binding Amount, StringFormat=N2}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
         </DockPanel>
         
+        <!-- Balance -->
+        <Label Name="LblBalance" Grid.Row="2" Grid.ColumnSpan="2" />
 
         <!-- Buttons -->
         <Grid Grid.Row="3" Grid.ColumnSpan="2">
