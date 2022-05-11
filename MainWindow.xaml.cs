@@ -34,6 +34,12 @@ namespace CreditKiosk
             personManager = new();
             transactionManager = new();
             UpdateListBoxPerson();
+
+            // Run fullscreen in production.
+#if !DEBUG
+            this.WindowStyle = WindowStyle.None;
+            this.WindowState = WindowState.Maximized;
+#endif
         }
 
         private void OpenPurchase()
@@ -152,6 +158,12 @@ namespace CreditKiosk
          * GUI EVENTS *
          ************ */
 
+        private void BtnExit_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult frm = MessageBox.Show(
+                "Vill du verkligen avsluta?", "Avsluta", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (frm == MessageBoxResult.Yes) Close();
+        }
 
         private void BtnProductGroups_Click(object sender, RoutedEventArgs e)
         {

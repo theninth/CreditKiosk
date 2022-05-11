@@ -15,6 +15,12 @@ namespace CreditKiosk.Persons
         {
             InitializeComponent();
             SetDataLbPersons(persons);
+
+            // Run fullscreen in production.
+#if !DEBUG
+            this.WindowStyle = WindowStyle.None;
+            this.WindowState = WindowState.Maximized;
+#endif
         }
 
         /// <summary>

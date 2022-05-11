@@ -5,7 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CreditKiosk.History"
         mc:Ignorable="d"
-        Title="Historik" Height="450" Width="800">
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="Historik" Height="450" Width="900">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -14,13 +22,13 @@
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="5*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="4*" />
         </Grid.ColumnDefinitions>
 
         <!-- Persons -->
-        <DockPanel Grid.Row="0"  Grid.RowSpan="2" Margin="5">
-            <Label DockPanel.Dock="Top">Kunder</Label>
+        <DockPanel Grid.Row="0" Grid.RowSpan="2" Margin="5">
+            <Label Name="LblBalance" FontWeight="Bold" DockPanel.Dock="Bottom" />
             <ListBox Name="LbPersons" DockPanel.Dock="Bottom" SelectionChanged="LbPersons_SelectionChanged" />
         </DockPanel>
         
@@ -31,8 +39,8 @@
             <ListView Name="LvDeposits" DockPanel.Dock="Bottom" SelectionChanged="LvDeposits_SelectionChanged">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Width="150" Header="Datum/tid" DisplayMemberBinding="{Binding Date, StringFormat=f}"/>
-                        <GridViewColumn Width="100" Header="Summa" DisplayMemberBinding="{Binding Amount, StringFormat=N2}"/>
+                        <GridViewColumn Width="180" Header="Datum/tid" DisplayMemberBinding="{Binding Date, StringFormat=f}"/>
+                        <GridViewColumn Width="120" Header="Summa" DisplayMemberBinding="{Binding Amount, StringFormat=N2}"/>
                         <GridViewColumn Width="300" Header="Kommentar" DisplayMemberBinding="{Binding Comment}"/>
                     </GridView>
                 </ListView.View>
@@ -45,17 +53,14 @@
             <ListView Name="LvPurchases" DockPanel.Dock="Bottom" SelectionChanged="LvPurchases_SelectionChanged">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Width="50" Header="Köpnr" DisplayMemberBinding="{Binding Id}"/>
-                        <GridViewColumn Width="180" Header="Datum/tid" DisplayMemberBinding="{Binding Date, StringFormat=f}"/>
-                        <GridViewColumn Width="100" Header="Produktgrupp" DisplayMemberBinding="{Binding ProductGroup}"/>
-                        <GridViewColumn Width="100" Header="Summa" DisplayMemberBinding="{Binding Amount, StringFormat=N2}"/>
+                        <GridViewColumn Width="30" Header="Köpnr" DisplayMemberBinding="{Binding Id}"/>
+                        <GridViewColumn Width="210" Header="Datum/tid" DisplayMemberBinding="{Binding Date, StringFormat=f}"/>
+                        <GridViewColumn Width="150" Header="Produktgrupp" DisplayMemberBinding="{Binding ProductGroup}"/>
+                        <GridViewColumn Width="150" Header="Summa" DisplayMemberBinding="{Binding Amount, StringFormat=N2}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
         </DockPanel>
-        
-        <!-- Balance -->
-        <Label Name="LblBalance" Grid.Row="2" Grid.ColumnSpan="2" />
 
         <!-- Buttons -->
         <Grid Grid.Row="3" Grid.ColumnSpan="2">

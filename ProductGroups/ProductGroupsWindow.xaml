@@ -5,17 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CreditKiosk.ProductGroups"
         mc:Ignorable="d"
-        Title="Produktgrupper" Height="450" Width="800">
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="17"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="Produktgrupper" Height="450" MinHeight="350" Width="450" MinWidth="400">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="5*" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <ListView Name="LvProductGroups">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="200" Header="Namn" DisplayMemberBinding="{Binding Name}"/>
-                    <GridViewColumn Width="100" Header="Summering" DisplayMemberBinding="{Binding Total, StringFormat=N2}"/>
+                    <GridViewColumn Width="250" Header="Namn" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Width="150" Header="Summering" DisplayMemberBinding="{Binding Total, StringFormat=N2}"/>
                 </GridView>
             </ListView.View>
         </ListView>
@@ -26,9 +34,9 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Button Name="BtnAdd" Grid.Column="0" Margin="5" Click="BtnAdd_Click">Lägg till</Button>
-            <Button Name="BtnDelete" Grid.Column="1" Margin="5" Click="BtnDelete_Click">Ta bort</Button>
-            <Button Name="BtnDone" Grid.Column="3" Margin="5" Click="BtnDone_Click">Klar</Button>
+            <Button Name="BtnAdd" Grid.Column="0" Margin="5" MinHeight="40" Click="BtnAdd_Click">Lägg till</Button>
+            <Button Name="BtnDelete" Grid.Column="1" Margin="5" MinHeight="40" Click="BtnDelete_Click">Ta bort</Button>
+            <Button Name="BtnDone" Grid.Column="3" Margin="5" MinHeight="40" Click="BtnDone_Click">Klar</Button>
         </Grid>
     </Grid>
 </Window>

@@ -5,38 +5,48 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CreditKiosk.History"
         mc:Ignorable="d"
-        Title="Kreditering" Height="280" Width="400" MinWidth="350" MinHeight="220">
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="17"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="Kreditering" Height="320" Width="500" MinWidth="350" MinHeight="220">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto" />
-            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <!-- Sum to credit -->
-        <Label Grid.Row="0" Grid.Column="0" Margin="5,5,5,5" Grid.ColumnSpan="2">Summa att kreditera:</Label>
-        <TextBox Name="TbxAmount" Grid.Row="0" Grid.Column="2" Margin="5,5,5,5"/>
-        <Label Grid.Row="0" Grid.Column="3" Margin="5,5,5,5">Kr</Label>
+        <Label Grid.Row="1" Grid.Column="1" Margin="5,5,5,5" Grid.ColumnSpan="2" FontWeight="Bold">Summa att kreditera:</Label>
+        <TextBox Name="TbxAmount" Grid.Row="1" Grid.Column="3" Margin="5,5,5,5" MinWidth="100"/>
+        <Label Grid.Row="1" Grid.Column="4" Margin="5,5,5,5" FontWeight="Bold">Kr</Label>
 
         <!-- Purchase -->
-        <Label Grid.Row="2" Grid.Column="0" Margin="5,5,5,5" Grid.ColumnSpan="2">Inköp:</Label>
-        <Label Name="LblPurchase" Grid.Row="2" Grid.Column="1" Margin="5,5,5,5" Grid.ColumnSpan="3"></Label>
+        <Label Grid.Row="2" Grid.Column="1" Margin="5,5,5,5" Grid.ColumnSpan="2" FontWeight="Bold">Inköp:</Label>
+        <Label Name="LblPurchase" Grid.Row="2" Grid.Column="2" Margin="5,5,5,5" Grid.ColumnSpan="3"></Label>
 
         <!-- Person -->
-        <Label Grid.Row="3" Grid.Column="0" Margin="5,5,5,5" Grid.ColumnSpan="2">Person:</Label>
-        <Label Name="LblPerson" Grid.Row="3" Grid.Column="1" Margin="5,5,5,5" Grid.ColumnSpan="3"></Label>
+        <Label Grid.Row="3" Grid.Column="1" Margin="5,5,5,5" Grid.ColumnSpan="2" FontWeight="Bold">Person:</Label>
+        <Label Name="LblPerson" Grid.Row="3" Grid.Column="2" Margin="5,5,5,5" Grid.ColumnSpan="3"></Label>
 
         <!-- Buttons -->
-        <StackPanel Grid.Row="5" Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
+        <StackPanel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
             <Button Name="BtnCancel" Margin="5" MinHeight="40" MinWidth="60" Click="BtnCancel_Click">Avbryt</Button>
             <Button Name="BtnCredit" Margin="5" MinHeight="40" MinWidth="80" Click="BtnCredit_Click">Kreditera</Button>
         </StackPanel>

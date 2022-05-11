@@ -51,6 +51,12 @@ namespace CreditKiosk.PurchaseWindow
         {
             InitializeComponent();
             this.NumPadAmount.NumPadPressed += OnNumPadPressed;
+
+            // Run fullscreen in production.
+#if !DEBUG
+            this.WindowStyle = WindowStyle.None;
+            this.WindowState = WindowState.Maximized;
+#endif
         }
 
         private void AddItem(ProductGroup productGroup, double amount)

@@ -29,6 +29,12 @@ namespace CreditKiosk.DepositWindow
             Person = person ?? throw new ArgumentNullException(nameof(person));
             InitializeComponent();
             UpdateLabelPerson();
+
+            // Run fullscreen in production.
+#if !DEBUG
+            this.WindowStyle = WindowStyle.None;
+            this.WindowState = WindowState.Maximized;
+#endif
         }
 
         private void UpdateLabelPerson()

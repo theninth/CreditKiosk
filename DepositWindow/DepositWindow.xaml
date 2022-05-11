@@ -5,38 +5,50 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CreditKiosk.DepositWindow"
         mc:Ignorable="d"
-        Title="Sätt in pengar" MinHeight="250" Height="250" MinWidth="300" Width="400">
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="17"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="Sätt in pengar" MinHeight="350" Height="350" MinWidth="450" Width="450">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <!-- Deposit amount -->
-        <Label Grid.Row="1" Grid.Column="0" Margin="5,5,5,5" Grid.ColumnSpan="2">Summa att sätta in:</Label>
-        <TextBox Name="TbxAmount" Grid.Row="1" Grid.Column="2" Margin="5,5,5,5"/>
-        <Label Grid.Row="1" Grid.Column="3" Margin="5,5,5,5">Kr</Label>
+        <Label Grid.Row="1" Grid.Column="1" Margin="5,5,5,5" Grid.ColumnSpan="2" FontWeight="Bold">Summa att sätta in:</Label>
+        <TextBox Name="TbxAmount" Grid.Row="1" Grid.Column="3" Margin="5,5,5,5" MinWidth="100"/>
+        <Label Grid.Row="1" Grid.Column="4" Margin="5,5,5,5" FontWeight="Bold">Kr</Label>
 
         <!-- Comment -->
-        <Label Grid.Row="2" Grid.Column="0" Margin="5,5,5,5" Grid.ColumnSpan="2">Kommentar:</Label>
-        <TextBox Name="TbxComment" Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="2" Margin="5,5,5,5"/>
+        <Label Grid.Row="2" Grid.Column="1" Margin="5,5,5,5" Grid.ColumnSpan="2" FontWeight="Bold">Kommentar:</Label>
+        <TextBox Name="TbxComment" Grid.Row="3" Grid.ColumnSpan="4" Grid.Column="1" Margin="5,5,5,5"/>
 
         <!-- Person -->
-        <Label Grid.Row="3" Grid.Column="0" Margin="5,5,5,5" Grid.ColumnSpan="2">Person:</Label>
-        <Label Name="LblPerson" Grid.Row="3" Grid.Column="2" Margin="5,5,5,5" Grid.ColumnSpan="2 "></Label>
+        <Label Grid.Row="4" Grid.Column="1" Margin="5,5,5,5" Grid.ColumnSpan="2" FontWeight="Bold">Person:</Label>
+        <Label Name="LblPerson" Grid.Row="4" Grid.Column="2" Margin="5,5,5,5" Grid.ColumnSpan="3 "></Label>
 
         <!-- Buttons -->
-        <StackPanel Grid.Row="5" Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
+        <StackPanel Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
             <Button Name="BtnCancel" Margin="5" MinHeight="40" MinWidth="60" Click="BtnCancel_Click">Avbryt</Button>
             <Button Name="BtnDeposit" Margin="5" MinHeight="40" MinWidth="80" Click="BtnDeposit_Click">Sätt in</Button>
         </StackPanel>

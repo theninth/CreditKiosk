@@ -5,10 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CreditKiosk.PurchaseWindow" xmlns:usercontrols="clr-namespace:CreditKiosk.UserControls"
         mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="17"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
         Title="Inköp" Height="450" Width="800" MinHeight="450" MinWidth="800">
-    <Window.Resources>
-        <SolidColorBrush x:Key="AbortColor" Color="Pink"/>
-    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto" />
@@ -25,16 +30,16 @@
 
         <!-- Shows name om person making purchase and their balance -->
         <DockPanel Grid.ColumnSpan="4">
-            <Label Name="LblName" DockPanel.Dock="Left">Förnamn Efternamn</Label>
-            <Label Name="LblBalance" DockPanel.Dock="Left">Saldo: X kr</Label>
+            <Label Name="LblBalance" DockPanel.Dock="Right" FontWeight="Bold">Saldo: X kr</Label>
+            <Label Name="LblName" DockPanel.Dock="Left" FontWeight="Bold">Förnamn Efternamn</Label>
         </DockPanel>
         
         <!-- Contain items in shopping cart -->
-        <ListView Name="LvItems" Grid.Row="1" Grid.ColumnSpan="3" Margin="5">
+        <ListView Name="LvItems" Grid.Row="1" Grid.ColumnSpan="3" Margin="5" SelectionChanged="LvItems_SelectionChanged">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="150" Header="Produktgrupp" DisplayMemberBinding="{Binding ProductGroup.Name}"/>
-                    <GridViewColumn Width="100" Header="Summa" DisplayMemberBinding="{Binding Amount, StringFormat=N2}"/>
+                    <GridViewColumn Width="300" Header="Produktgrupp" DisplayMemberBinding="{Binding ProductGroup.Name}"/>
+                    <GridViewColumn Width="200" Header="Summa" DisplayMemberBinding="{Binding Amount, StringFormat=N2}"/>
                 </GridView>
             </ListView.View>
         </ListView>
@@ -46,9 +51,9 @@
                          MinWidth="100"
                          Margin="5"
                          TextChanged="TbxItemAmount_TextChanged" />
-                <Label Margin="5">Kr.</Label>
+                <Label Margin="5" FontWeight="Bold">Kr.</Label>
             </StackPanel>
-            <Label Margin="5" Name="LblTotal">Totalt: 0.00 Kr</Label>
+            <Label Margin="5" Name="LblTotal" FontWeight="Bold">Totalt: 0.00 Kr</Label>
         </StackPanel>
         
         <!-- Contains numpad -->
@@ -61,8 +66,8 @@
         </ScrollViewer>
         
         <StackPanel Name="MiscButtons" Grid.Column="4" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Bottom">
-            <Button Name="BtnDelete" Margin="5" MinHeight="40" MinWidth="80" Click="BtnDelete_Click">Ta bort!</Button>
-            <Button Name="BtnAbort" Margin="5" Background="{DynamicResource AbortColor}" MinHeight="40" MinWidth="80" Click="BtnAbort_Click">Avbryt</Button>
+            <Button Name="BtnDelete" Margin="5" IsEnabled="False" MinHeight="40" MinWidth="80" Click="BtnDelete_Click">Ta bort!</Button>
+            <Button Name="BtnAbort" Margin="5" MinHeight="40" MinWidth="80" Click="BtnAbort_Click">Avbryt</Button>
             <Button Name="BtnPay" Margin="5" IsEnabled="False" MinHeight="100" MinWidth="80" Click="BtnPay_Click" Height="50">Betala</Button>
         </StackPanel>
     </Grid>

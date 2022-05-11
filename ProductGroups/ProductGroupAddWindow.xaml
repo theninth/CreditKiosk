@@ -5,23 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CreditKiosk.ProductGroups"
         mc:Ignorable="d"
-        Title="Lägg till produktgrupp" Height="200" Width="200" MinWidth="200" MinHeight="180">
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="17"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="Lägg till produktgrupp" Height="250" Width="300" MinWidth="200" MinHeight="250">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0" Margin="5">Namn:</Label>
-        <TextBox Name="TbxName" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="5" TextChanged="TbxName_TextChanged"/>
+        <Label Grid.Row="1" Grid.Column="1" Margin="5" FontWeight="Bold">Namn:</Label>
+        <TextBox Name="TbxName" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Margin="5" MinWidth="150" TextChanged="TbxName_TextChanged"/>
 
-        <StackPanel Grid.Row="2" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right">
+        <StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Name="BtnCancel" Margin="5" MinHeight="40" MinWidth="60" Click="BtnCancel_Click">Avbryt</Button>
             <Button Name="BtnAdd" Margin="5" MinHeight="40" MinWidth="80" Click="BtnAdd_Click">Lägg Till</Button>
         </StackPanel>

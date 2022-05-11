@@ -32,6 +32,12 @@ namespace CreditKiosk.History
 
             TbxAmount.Text = $"{Purchase.Amount:n2}";
             UpdatePurchaseLabels();
+
+            // Run fullscreen in production.
+#if !DEBUG
+            this.WindowStyle = WindowStyle.None;
+            this.WindowState = WindowState.Maximized;
+#endif
         }
 
         private void UpdatePurchaseLabels()

@@ -4,14 +4,26 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="17"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
         Title="Lägerkiosk" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="217*"/>
-            <ColumnDefinition Width="17*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        <ListBox Name="ListboxPersons" SelectionChanged="ListboxPersons_SelectionChanged" MouseDoubleClick="ListboxPersons_MouseDoubleClick" Margin="5,5,5,5" Grid.ColumnSpan="2" />
+        <ListBox Name="ListboxPersons"
+                 Grid.ColumnSpan="2"
+                 Margin="6" 
+                 SelectionChanged="ListboxPersons_SelectionChanged"
+                 MouseDoubleClick="ListboxPersons_MouseDoubleClick" />
         <Grid Grid.Column="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
@@ -21,11 +33,15 @@
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
-            <Label Name="LabelBalance" Grid.Row="0" Margin="5" />
+            <StackPanel Grid.Row="0" Orientation="Vertical">
+                <Label Name="LabelBalance" Margin="5" MinHeight="30" FontWeight="Bold" />
+                <Button Name="BtnExit" Margin="5" MinHeight="40" Click="BtnExit_Click">Avsluta</Button>
+            </StackPanel>
+            
             <Button Name="BtnDeposit" Grid.Row="1" Margin="5" MinHeight="40" Click="BtnDeposit_Click" IsEnabled="False">Insättning</Button>
             <Button Name="BtnPersons" Grid.Row="2" Margin="5" MinHeight="40" Click="BtnPersons_Click">Kunder</Button>
             <Button Name="BtnProductGroups" Grid.Row="3" Margin="5" MinHeight="40" Click="BtnProductGroups_Click">Produktgrupper</Button>
-            <Button Name="BtnHistory" Grid.Row="4" Margin="5 5 5 55" MinHeight="40" IsEnabled="False" Click="BtnHistory_Click">Historik</Button>
+            <Button Name="BtnHistory" Grid.Row="4" Margin="5 5 5 30" MinHeight="40" IsEnabled="False" Click="BtnHistory_Click">Historik</Button>
             <Button Name="BtnStartPurchase" Grid.Row="5" Margin="5" MinHeight="80" Click="BtnStartPurchase_Click" IsEnabled="False">Påbörja köp</Button>
         </Grid>
     </Grid>

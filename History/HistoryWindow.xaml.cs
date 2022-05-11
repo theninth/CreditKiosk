@@ -36,6 +36,12 @@ namespace CreditKiosk.History
                 .ToList()
                 .Where(i => i.Id == selectedPerson.Id)
                 .Single();
+
+            // Run fullscreen in production.
+#if !DEBUG
+            this.WindowStyle = WindowStyle.None;
+            this.WindowState = WindowState.Maximized;
+#endif
         }
 
         public event EventHandler<CreditEventArgs>? PersonCredited;
