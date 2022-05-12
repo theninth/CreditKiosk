@@ -37,6 +37,23 @@ namespace CreditKiosk.DepositWindow
 #endif
         }
 
+        private void UpdateControlsOnValid()
+        {
+            double amount;
+
+            bool isValidText = Double.TryParse(TbxAmount.Text.Trim(), out amount);
+            bool isSaneAmount = amount <= (double)App.Current.Resources["SaneAmount"];
+            bool isAboveZero = amount > 0;
+            bool isBlank = TbxAmount.Text.Trim() == string.Empty;
+
+            // Sets background color of textbox.
+            TbxAmount.Background = (isValidText && isSaneAmount && isAboveZero) || isBlank ?
+                new SolidColorBrush(Colors.White) : new SolidColorBrush(Colors.Pink);
+
+            // Enables or disables credit button.
+            BtnDeposit.IsEnabled = isValidText && isSaneAmount && isAboveZero && !isBlank;
+        }
+
         private void UpdateLabelPerson()
         {
             LblPerson.Content = Person != null ? Person.ToString() : string.Empty;
@@ -48,7 +65,7 @@ namespace CreditKiosk.DepositWindow
         {
             double amount;
 
-            if (!Double.TryParse(TbxAmount.Text, out amount)) return;
+            if (!Double.TryParse(TbxAmount.Text.Trim(), out amount)) return;
             
             Deposit = new Deposit()
             {
@@ -59,5 +76,7 @@ namespace CreditKiosk.DepositWindow
             DialogResult = true;
             return;
         }
+
+        private void TbxAmount_TextChanged(object sender, TextChangedEventArgs e) => UpdateControlsOnValid();
     }
 }

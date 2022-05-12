@@ -38,7 +38,7 @@
         
         <!-- Deposit amount -->
         <Label Grid.Row="1" Grid.Column="1" Margin="5,5,5,5" Grid.ColumnSpan="2" FontWeight="Bold">Summa att sätta in:</Label>
-        <TextBox Name="TbxAmount" Grid.Row="1" Grid.Column="3" Margin="5,5,5,5" MinWidth="100"/>
+        <TextBox Name="TbxAmount" Grid.Row="1" Grid.Column="3" Margin="5,5,5,5" MinWidth="100" TextChanged="TbxAmount_TextChanged" />
         <Label Grid.Row="1" Grid.Column="4" Margin="5,5,5,5" FontWeight="Bold">Kr</Label>
 
         <!-- Comment -->
@@ -52,7 +52,13 @@
         <!-- Buttons -->
         <StackPanel Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
             <Button Name="BtnCancel" Margin="5" MinHeight="40" MinWidth="60" Click="BtnCancel_Click">Avbryt</Button>
-            <Button Name="BtnDeposit" Margin="5" MinHeight="40" MinWidth="80" Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="BtnDeposit_Click">Sätt in</Button>
+            <Button Name="BtnDeposit"
+                    Margin="5"
+                    MinHeight="40" MinWidth="80"
+                    Style="{StaticResource MaterialDesignRaisedAccentButton}"
+                    IsEnabled="false"
+                    Click="BtnDeposit_Click"
+                    >Sätt in</Button>
         </StackPanel>
     </Grid>
 </Window>

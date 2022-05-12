@@ -17,6 +17,8 @@
 
             <system:String x:Key="AppName">CreditKiosk</system:String>
 
+            <!-- This is the max value the user can deposit -->
+            <system:Double x:Key="SaneAmount">10000</system:Double>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
