@@ -33,6 +33,8 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
+        <Label FontWeight="Bold">Kreditera kund</Label>
+        
         <!-- Sum to credit -->
         <Label Grid.Row="1" Grid.Column="1" Margin="5,5,5,5" Grid.ColumnSpan="2" FontWeight="Bold">Summa att kreditera:</Label>
         <TextBox Name="TbxAmount" Grid.Row="1" Grid.Column="3" Margin="5,5,5,5" MinWidth="100" TextChanged="TbxAmount_TextChanged"/>

@@ -134,7 +134,10 @@ namespace CreditKiosk.PurchaseWindow
 
         private void UpdateBtnPay()
         {
-            BtnPay.IsEnabled = LvItems.Items.Count > 0;
+            bool hasItems = LvItems.Items.Count > 0;
+            bool amountIsEmpty = TbxItemAmount.Text.Trim() == String.Empty;
+            BtnPay.IsEnabled = hasItems && amountIsEmpty;
+
         }
 
         private void UpdateTotal() => LblTotal.Content = $"Totalt: {CalcTotal():#,0.00} Kr.";

@@ -73,10 +73,9 @@ namespace CreditKiosk.Persons
             double initialDeposit;
             Person person = createPerson();
 
-            if (person != null)
-            {
-                Person = person;
-            }
+            if (person == null) return;
+
+            Person = person;
 
 
             if(Double.TryParse(TbxInitialDeposit.Text, out initialDeposit))

@@ -30,6 +30,7 @@
         <DockPanel Grid.Row="0" Grid.RowSpan="2" Margin="5">
             <Label Name="LblBalance" FontWeight="Bold" DockPanel.Dock="Bottom" />
             <ListBox Name="LbPersons" DockPanel.Dock="Bottom" SelectionChanged="LbPersons_SelectionChanged" />
+            <Label FontSize="17" FontWeight="Bold">Historik</Label>
         </DockPanel>
 
         <TabControl Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Margin="5" SelectionChanged="TabControl_SelectionChanged">

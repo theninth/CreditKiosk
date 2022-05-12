@@ -29,9 +29,9 @@
         </Grid.RowDefinitions>
 
         <!-- Shows name om person making purchase and their balance -->
-        <DockPanel Grid.ColumnSpan="4">
+        <DockPanel Grid.ColumnSpan="4" Margin="5">
             <Label Name="LblBalance" DockPanel.Dock="Right" FontWeight="Bold">Saldo: X kr</Label>
-            <Label Name="LblName" DockPanel.Dock="Left" FontWeight="Bold">Förnamn Efternamn</Label>
+            <Label FontSize="17" Name="LblName" DockPanel.Dock="Left" FontWeight="Bold">Förnamn Efternamn</Label>
         </DockPanel>
         
         <!-- Contain items in shopping cart -->

@@ -16,10 +16,12 @@
         Title="Produktgrupper" Height="450" MinHeight="350" Width="450" MinWidth="400">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <ListView Name="LvProductGroups">
+        <Label FontWeight="Bold" FontSize="17" Margin="5">Produktgrupper</Label>
+        <ListView Grid.Row="1" Name="LvProductGroups">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="250" Header="Namn" DisplayMemberBinding="{Binding Name}"/>
@@ -27,7 +29,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
