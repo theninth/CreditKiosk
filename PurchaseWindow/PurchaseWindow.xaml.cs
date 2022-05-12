@@ -98,6 +98,25 @@ namespace CreditKiosk.PurchaseWindow
             return LvItems.Items.Cast<PurchaseItem>().ToList().Sum(i => i.Amount);
         }
 
+        /// <summary>
+        /// If TbxItemAmount.Text has text that can be parsed as a double, ask to make sure the user really want
+        /// to exit window without finish the purchase.
+        /// </summary>
+        /// <returns></returns>
+        private bool ContinueWithHalfPayment()
+        {
+            double _;
+
+            if (Double.TryParse(TbxItemAmount.Text.Trim(), out _))
+            {
+                string message = "Du verkar ha skrivit i en summa utan att välja en varugrupp. " + Environment.NewLine +
+                    "Vill du fortsätta utan att välja varugrupp för den inskrivna summan?";
+                MessageBoxResult result = MessageBox.Show(message, "Betala?", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                return result == MessageBoxResult.Yes;
+            }
+            return true;
+        }
+
         private void UpdateProductGroupButtons()
         {
             ProductGroupButtons.Children.Clear();
@@ -114,6 +133,7 @@ namespace CreditKiosk.PurchaseWindow
                     button.MinHeight = 60;
                     button.MinWidth = 60;
                     button.Margin = new Thickness(5, 5, 5, 5);
+                    button.Style = (Style)FindResource("MaterialDesignRaisedAccentButton");
                     ProductGroupButtons.Children.Add(button);
                 }
             }
@@ -202,6 +222,8 @@ namespace CreditKiosk.PurchaseWindow
 
         private void BtnPay_Click(object sender, RoutedEventArgs e)
         {
+            if (!ContinueWithHalfPayment()) return;
+
             List<PurchaseItem> items = LvItems.Items.Cast<PurchaseItem>().ToList();
             List<Purchase> purchases = PurchaseHelpers.PurchasesGroupedByProduceGroup(items);
 

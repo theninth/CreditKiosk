@@ -27,17 +27,17 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Button Name="Btn1" Grid.Row="2" Grid.Column="0" Margin="5" MinWidth="60" MinHeight="60" Click="Btn1_Click">1</Button>
-        <Button Name="Btn2" Grid.Row="2" Grid.Column="1" Margin="5" MinWidth="60" MinHeight="60" Click="Btn2_Click">2</Button>
-        <Button Name="Btn3" Grid.Row="2" Grid.Column="2" Margin="5" MinWidth="60" MinHeight="60" Click="Btn3_Click">3</Button>
-        <Button Name="Btn4" Grid.Row="1" Grid.Column="0" Margin="5" MinWidth="60" MinHeight="60" Click="Btn4_Click">4</Button>
-        <Button Name="Btn5" Grid.Row="1" Grid.Column="1" Margin="5" MinWidth="60" MinHeight="60" Click="Btn5_Click">5</Button>
-        <Button Name="Btn6" Grid.Row="1" Grid.Column="2" Margin="5" MinWidth="60" MinHeight="60" Click="Btn6_Click">6</Button>
-        <Button Name="Btn7" Grid.Row="0" Grid.Column="0" Margin="5" MinWidth="60" MinHeight="60" Click="Btn7_Click">7</Button>
-        <Button Name="Btn8" Grid.Row="0" Grid.Column="1" Margin="5" MinWidth="60" MinHeight="60" Click="Btn8_Click">8</Button>
-        <Button Name="Btn9" Grid.Row="0" Grid.Column="2" Margin="5" MinWidth="60" MinHeight="60" Click="Btn9_Click">9</Button>
-        <Button Name="Btn0" Grid.Row="3" Grid.Column="1" Margin="5" MinWidth="60" MinHeight="60" Click="Btn0_Click">0</Button>
-        <Button Name="BtnComma" Grid.Row="3" Grid.Column="2" Margin="5" Click="BtnComma_Click">,</Button>
-        <Button Name="BtnClear" Grid.Row="3" Grid.Column="0" Margin="5" Click="BtnClear_Click">TÖM</Button>
+        <Button Name="Btn1" Grid.Row="2" Grid.Column="0" Margin="5" MinWidth="60" MinHeight="60" Style="{StaticResource MaterialDesignRaisedDarkButton}" Click="Btn1_Click">1</Button>
+        <Button Name="Btn2" Grid.Row="2" Grid.Column="1" Margin="5" MinWidth="60" MinHeight="60" Style="{StaticResource MaterialDesignRaisedDarkButton}" Click="Btn2_Click">2</Button>
+        <Button Name="Btn3" Grid.Row="2" Grid.Column="2" Margin="5" MinWidth="60" MinHeight="60" Style="{StaticResource MaterialDesignRaisedDarkButton}" Click="Btn3_Click">3</Button>
+        <Button Name="Btn4" Grid.Row="1" Grid.Column="0" Margin="5" MinWidth="60" MinHeight="60" Style="{StaticResource MaterialDesignRaisedDarkButton}" Click="Btn4_Click">4</Button>
+        <Button Name="Btn5" Grid.Row="1" Grid.Column="1" Margin="5" MinWidth="60" MinHeight="60" Style="{StaticResource MaterialDesignRaisedDarkButton}" Click="Btn5_Click">5</Button>
+        <Button Name="Btn6" Grid.Row="1" Grid.Column="2" Margin="5" MinWidth="60" MinHeight="60" Style="{StaticResource MaterialDesignRaisedDarkButton}" Click="Btn6_Click">6</Button>
+        <Button Name="Btn7" Grid.Row="0" Grid.Column="0" Margin="5" MinWidth="60" MinHeight="60" Style="{StaticResource MaterialDesignRaisedDarkButton}" Click="Btn7_Click">7</Button>
+        <Button Name="Btn8" Grid.Row="0" Grid.Column="1" Margin="5" MinWidth="60" MinHeight="60" Style="{StaticResource MaterialDesignRaisedDarkButton}" Click="Btn8_Click">8</Button>
+        <Button Name="Btn9" Grid.Row="0" Grid.Column="2" Margin="5" MinWidth="60" MinHeight="60" Style="{StaticResource MaterialDesignRaisedDarkButton}" Click="Btn9_Click">9</Button>
+        <Button Name="Btn0" Grid.Row="3" Grid.Column="1" Margin="5" MinWidth="60" MinHeight="60" Style="{StaticResource MaterialDesignRaisedDarkButton}" Click="Btn0_Click">0</Button>
+        <Button Name="BtnComma" Grid.Row="3" Grid.Column="2" Margin="5" MinWidth="60" MinHeight="60" Style="{StaticResource MaterialDesignRaisedLightButton}" Click="BtnComma_Click">,</Button>
+        <Button Name="BtnClear" Grid.Row="3" Grid.Column="0" Margin="5" MinWidth="60" MinHeight="60" Style="{StaticResource MaterialDesignRaisedLightButton}" Click="BtnClear_Click">TÖM</Button>
     </Grid>
 </UserControl>

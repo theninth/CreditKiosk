@@ -55,7 +55,7 @@
         <!-- Buttons -->
         <StackPanel Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
             <Button Name="BtnCancel" Margin="5" MinHeight="40" MinWidth="60" Click="BtnCancel_Click">Avbryt</Button>
-            <Button Name="BtnCredit" Margin="5" MinHeight="40" MinWidth="80" Click="BtnCredit_Click">Kreditera</Button>
+            <Button Name="BtnCredit" Margin="5" MinHeight="40" MinWidth="80" Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="BtnCredit_Click">Kreditera</Button>
         </StackPanel>
     </Grid>
 </Window>

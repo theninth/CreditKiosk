@@ -52,7 +52,7 @@
         <!-- Buttons -->
         <StackPanel Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
             <Button Name="BtnCancel" Margin="5" MinHeight="40" MinWidth="60" Click="BtnCancel_Click">Avbryt</Button>
-            <Button Name="BtnDeposit" Margin="5" MinHeight="40" MinWidth="80" Click="BtnDeposit_Click">Sätt in</Button>
+            <Button Name="BtnDeposit" Margin="5" MinHeight="40" MinWidth="80" Style="{StaticResource MaterialDesignRaisedAccentButton}" Click="BtnDeposit_Click">Sätt in</Button>
         </StackPanel>
     </Grid>
 </Window>
