@@ -98,7 +98,7 @@ namespace CreditKiosk
             }
 
             double balance = ((Person)ListboxPersons.SelectedItem).Balance;
-            LabelBalance.Content = $"Saldo: {balance} Kr.";
+            LabelBalance.Content = $"Saldo: {balance:n2} Kr.";
         }
 
 
