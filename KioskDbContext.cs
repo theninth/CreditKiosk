@@ -9,6 +9,8 @@ namespace CreditKiosk
         public DbSet<Purchase>? Purchases { get; set; }
         public DbSet<Deposit>? Deposits { get; set; }
 
+        public DbSet<Credit>? Credits { get; set; }
+
         public DbSet<Person>? Persons { get; set; }
 
         public DbSet<ProductGroup>? ProductGroups { get; set; }
@@ -20,6 +22,7 @@ namespace CreditKiosk
             string appName = (string)App.Current.Resources["AppName"];
             string appDataFolder = Helpers.DataPaths.CreateAndGetAppDataFolder();
             DbPath = Path.Join(appDataFolder, $"{appName}.db");
+            //DbPath = "c:\\users\\thena\\DeleteMe.db";
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)

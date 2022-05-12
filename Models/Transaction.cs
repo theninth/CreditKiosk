@@ -11,9 +11,6 @@ namespace CreditKiosk.Models
 
         public DateTime Date { get; set; }
 
-        public int PersonId { get; set; }
-        public Person? Person { get; set; }
-
         public double Amount
         {
             get { return _amount; }

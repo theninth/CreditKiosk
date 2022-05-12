@@ -20,6 +20,8 @@ namespace CreditKiosk.History
     /// </summary>
     public partial class CreditPurchaseWindow : Window
     {
+        private double amountAvailableForCredit;
+
         public Purchase Purchase { get; set; }
 
         public double Amount { get; private set; }
@@ -27,11 +29,10 @@ namespace CreditKiosk.History
         public CreditPurchaseWindow(Purchase purchase)
         {
             this.Purchase = purchase;
-
             InitializeComponent();
 
-            TbxAmount.Text = $"{Purchase.Amount:n2}";
-            UpdatePurchaseLabels();
+            TbxAmount.Text = $"{Purchase.CreditableAmount:n2}";
+            UpdateLabels();
 
             // Run fullscreen in production.
 #if !DEBUG
@@ -40,12 +41,27 @@ namespace CreditKiosk.History
 #endif
         }
 
-        private void UpdatePurchaseLabels()
+        private void UpdateLabels()
         {
-            LblPerson.Content = Purchase.Person.ToString();
+            LblPerson.Content = Purchase.Person != null ? Purchase.Person.ToString() : string.Empty;
             LblPurchase.Content = Purchase.ToString();
+            LblAvailableForCredit.Content = $"{Purchase.CreditableAmount:n2}";
         }
 
+        private void UpdateControlsOnValid()
+        {
+            double amount;
+
+            bool isValidText = Double.TryParse(TbxAmount.Text, out amount);
+            bool isValidAmount = amount <= Purchase.CreditableAmount;
+
+            // Sets background color of textbox.
+            TbxAmount.Background = isValidText && isValidAmount ?
+                new SolidColorBrush(Colors.White) : new SolidColorBrush(Colors.Pink);
+
+            // Enables or disables credit button.
+            BtnCredit.IsEnabled = isValidText && isValidAmount;
+        }
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;
@@ -65,9 +81,9 @@ namespace CreditKiosk.History
                 return;
             }
             
-            if (amount > Purchase.Amount)
+            if (amount > Purchase.CreditableAmount)
             {
-                MessageBox.Show("Det går inte att kreditera mer än inköpet motsvarar", "Fel!");
+                MessageBox.Show($"Det går inte att kreditera mer än {Purchase.CreditableAmount:n2} kr", "Fel!");
                 return;
             }
             else if (amount < 0)
@@ -79,6 +95,11 @@ namespace CreditKiosk.History
             Amount = amount;
             DialogResult = true;
             Close();
+        }
+
+        private void TbxAmount_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateControlsOnValid();
         }
     }
 }

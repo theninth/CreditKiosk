@@ -3,6 +3,7 @@ using System;
 using CreditKiosk;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CreditKiosk.Migrations
 {
     [DbContext(typeof(KioskDbContext))]
-    partial class KioskDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220512101957_CreditModelAdded")]
+    partial class CreditModelAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.4");

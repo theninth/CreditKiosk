@@ -31,36 +31,51 @@
             <Label Name="LblBalance" FontWeight="Bold" DockPanel.Dock="Bottom" />
             <ListBox Name="LbPersons" DockPanel.Dock="Bottom" SelectionChanged="LbPersons_SelectionChanged" />
         </DockPanel>
-        
 
-        <!-- Deposits -->
-        <DockPanel Grid.Row="0" Grid.Column="2" Margin="5">
-            <Label DockPanel.Dock="Top">Insättningar</Label>
-            <ListView Name="LvDeposits" DockPanel.Dock="Bottom" SelectionChanged="LvDeposits_SelectionChanged">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Width="180" Header="Datum/tid" DisplayMemberBinding="{Binding Date, StringFormat=f}"/>
-                        <GridViewColumn Width="120" Header="Summa" DisplayMemberBinding="{Binding Amount, StringFormat=N2}"/>
-                        <GridViewColumn Width="300" Header="Kommentar" DisplayMemberBinding="{Binding Comment}"/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </DockPanel>
+        <TabControl Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Margin="5" SelectionChanged="TabControl_SelectionChanged">
 
-        <!-- Purchases -->
-        <DockPanel Grid.Row="1" Grid.Column="2" Margin="5">
-            <Label DockPanel.Dock="Top">Inköp</Label>
-            <ListView Name="LvPurchases" DockPanel.Dock="Bottom" SelectionChanged="LvPurchases_SelectionChanged">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Width="30" Header="Köpnr" DisplayMemberBinding="{Binding Id}"/>
-                        <GridViewColumn Width="210" Header="Datum/tid" DisplayMemberBinding="{Binding Date, StringFormat=f}"/>
-                        <GridViewColumn Width="150" Header="Produktgrupp" DisplayMemberBinding="{Binding ProductGroup}"/>
-                        <GridViewColumn Width="150" Header="Summa" DisplayMemberBinding="{Binding Amount, StringFormat=N2}"/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </DockPanel>
+            <!-- Purchases -->
+            <TabItem Name="TabItemPurchases" Header="Inköp">
+                <ListView Name="LvPurchases" SelectionChanged="LvPurchases_SelectionChanged">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="30" Header="Köpnr" DisplayMemberBinding="{Binding Id}"/>
+                            <GridViewColumn Width="210" Header="Datum/tid" DisplayMemberBinding="{Binding Date, StringFormat=f}"/>
+                            <GridViewColumn Width="150" Header="Produktgrupp" DisplayMemberBinding="{Binding ProductGroup}"/>
+                            <GridViewColumn Width="150" Header="Summa" DisplayMemberBinding="{Binding Amount, StringFormat=N2}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </TabItem>
+            
+            <!-- Deposits -->
+            <TabItem Name="TabItemDeposit" Header="Insättningar">
+                 <ListView Name="LvDeposits" SelectionChanged="LvDeposits_SelectionChanged">
+                     <ListView.View>
+                         <GridView>
+                             <GridViewColumn Width="180" Header="Datum/tid" DisplayMemberBinding="{Binding Date, StringFormat=f}"/>
+                             <GridViewColumn Width="120" Header="Summa" DisplayMemberBinding="{Binding Amount, StringFormat=N2}"/>
+                             <GridViewColumn Width="300" Header="Kommentar" DisplayMemberBinding="{Binding Comment}"/>
+                         </GridView>
+                     </ListView.View>
+                 </ListView>
+            </TabItem>
+
+            <!-- Credits -->
+            <TabItem Name="TabItemCredits" Header="Krediteringar">
+                <ListView Name="LvCredits">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="180" Header="Datum/tid" DisplayMemberBinding="{Binding Date, StringFormat=f}"/>
+                            <GridViewColumn Width="180" Header="Köp" DisplayMemberBinding="{Binding Purchase}"/>
+                            <GridViewColumn Width="120" Header="Summa" DisplayMemberBinding="{Binding Amount, StringFormat=N2}"/>
+                            <GridViewColumn Width="300" Header="Kommentar" DisplayMemberBinding="{Binding Comment}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+
+            </TabItem>
+        </TabControl>
 
         <!-- Buttons -->
         <Grid Grid.Row="3" Grid.ColumnSpan="2">

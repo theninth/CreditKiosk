@@ -67,13 +67,21 @@ namespace CreditKiosk.History
             }
         }
 
-        private void UpdateLvDepositsAndPurchases(Person person)
+        private void UpdateLists(Person person)
         {
             using (var context = new KioskDbContext())
             {
-                if (context.Deposits == null || context.Purchases == null)
+                if (context.Deposits == null)
                 {
-                    throw new Exception("Neither Deposits nor Purchases should be null here. What happened?");
+                    throw new Exception("Deposits should not be null here. What happened?");
+                }
+                else if (context.Purchases == null)
+                {
+                    throw new Exception("Purchases should not be null here. What happened?");
+                }
+                else if (context.Credits == null)
+                {
+                    throw new Exception("Credits should not be null here. What happened?");
                 }
 
                 List<Deposit>? deposits = context.Deposits
@@ -84,6 +92,13 @@ namespace CreditKiosk.History
                     .Where(p => p.PersonId == person.Id)
                     .Include(d => d.Person)
                     .Include(d => d.ProductGroup)
+                    .ToList();
+
+                List<Credit>? credits = context.Credits
+                    .Where(c => c.Purchase.PersonId == person.Id)
+                    .Include(c => c.Purchase)
+                    .Include(c => c.Purchase.Person)
+                    .Include(c => c.Purchase.ProductGroup)
                     .ToList();
 
                 LvDeposits.Items.Clear();
@@ -97,13 +112,19 @@ namespace CreditKiosk.History
                 {
                     if (purchase != null) LvPurchases.Items.Add(purchase);
                 }
+
+                LvCredits.Items.Clear();
+                foreach (Credit? credit in credits)
+                {
+                    if (credit != null) LvCredits.Items.Add(credit);
+                }
             }
         }
 
         protected virtual void OnCredit(CreditEventArgs e) => PersonCredited?.Invoke(this, e);
 
 
-        /* ************
+        /*************
         * GUI EVENTS *
         ************ */
 
@@ -112,7 +133,19 @@ namespace CreditKiosk.History
             Purchase purchase = (Purchase)LvPurchases.SelectedItem;
             
             if (purchase == null) return;
-            
+
+            double? creditableAmount = purchase.CreditableAmount;
+            if (creditableAmount == null)
+            {
+                throw new Exception("Creditable amount was null. This should not be able to happen.");
+            }
+
+            if (creditableAmount <= 0)
+            {
+                MessageBox.Show("Kan inte kreditera. Varan är redan helt krediterad!", "Fel!");
+                return;
+            }
+
             CreditPurchaseWindow frm = new(purchase);
             frm.ShowDialog();
             
@@ -135,7 +168,7 @@ namespace CreditKiosk.History
             Person? selectedPerson = (Person)LbPersons.SelectedItem;
             if (selectedPerson != null)
             {
-                UpdateLvDepositsAndPurchases(selectedPerson);
+                UpdateLists(selectedPerson);
             }
 
             UpdateLblBalance(selectedPerson);
@@ -150,6 +183,25 @@ namespace CreditKiosk.History
         {
             bool purchaseSelected = LvPurchases.SelectedIndex >= 0;
             BtnCredit.IsEnabled = purchaseSelected;
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Really ugly hack to make sure the changes are in the tabcontrol and not the children.
+            if (!((Control)e.Source).GetType().ToString().EndsWith("TabControl")) return;
+
+            TabItem currentTabItem = (TabItem)((TabControl)e.Source).SelectedItem;
+            if (currentTabItem == null) return;  // Should not happen
+
+            // Make check if button should be shown or not.
+            if (currentTabItem.Name == "TabItemPurchases")
+            {
+                BtnCredit.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                BtnCredit.Visibility = Visibility.Hidden;
+            }
         }
     }
 }

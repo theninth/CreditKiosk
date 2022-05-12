@@ -21,8 +21,9 @@ namespace CreditKiosk.Models
                 using (var context = new KioskDbContext())
                 {
                     double depositSum = context.Deposits.Where(p => p.PersonId == this.Id).Sum(i => i.Amount);
+                    double creditSum = context.Credits.Where(p => p.Purchase.Id == this.Id).Sum(i => i.Amount);
                     double purchaseSum = context.Purchases.Where(p => p.PersonId == this.Id).Sum(i => i.Amount);
-                    double sum = depositSum - purchaseSum;
+                    double sum = depositSum + creditSum - purchaseSum;
                     return sum;
                 }
             }
