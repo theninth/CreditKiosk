@@ -58,20 +58,9 @@ namespace CreditKiosk
                 ProductGroups = productGroupManager.GetAll().ToArray(),
                 Person = (Person)ListboxPersons.SelectedItem
             };
+
+            purchaseWindow.NewPurchase += OnNewPurchase;
             purchaseWindow.ShowDialog();
-
-            if (purchaseWindow.Purchases == null)
-            {
-                Debug.WriteLine("Purchase window ended without supplied purchase. I suppose user aborted?");
-                return;
-            }
-
-            foreach (Purchase? purchase in purchaseWindow.Purchases)
-            {
-                transactionManager.Purchase(purchase);
-            }
-
-            UpdateLabelBalance();
         }
 
         /// <summary>
@@ -191,6 +180,17 @@ namespace CreditKiosk
             {
                 MessageBox.Show(ex.Message, "Fel!");
             }
+            UpdateLabelBalance();
+        }
+
+        /// <summary>
+        /// Event handler for a new purchase.
+        /// </summary>
+        /// <param name="source">Source object.</param>
+        /// <param name="e">Event handler.</param>
+        private void OnNewPurchase(object source, PurchaseEventArgs e)
+        {
+            transactionManager.Purchase(e.Purchase);
             UpdateLabelBalance();
         }
 

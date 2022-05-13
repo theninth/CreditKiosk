@@ -39,9 +39,9 @@ namespace CreditKiosk.PurchaseWindow
         }
 
         /// <summary>
-        /// Purchases provided for the windows parent to get purchases.
+        /// Subscribe to this event to watch a new purchase is made.
         /// </summary>
-        public List<Purchase>? Purchases;
+        public event EventHandler<PurchaseEventArgs>? NewPurchase;
 
         /// <summary>
         /// You have to set these to the product groups that are available to the purchase.
@@ -210,17 +210,22 @@ namespace CreditKiosk.PurchaseWindow
             LblLeftAfterPurchase.Visibility = Visibility.Visible;
         }
 
+        /// <summary>
+        /// Fire events on new purchase.
+        /// </summary>
+        /// <param name="e">Purchase event arguments.</param>
+        protected virtual void OnNewPurchase(PurchaseEventArgs e) => NewPurchase?.Invoke(this, e);
 
         /*************************
          * CUSTOM EVENT HANDLERS * 
          *************************/
 
-            /// <summary>
-            /// Event handler for when numpad is pressed.
-            /// </summary>
-            /// <param name="source"></param>
-            /// <param name="e"></param>
-            /// <exception cref="NotImplementedException"></exception>
+        /// <summary>
+        /// Event handler for when numpad is pressed.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        /// <exception cref="NotImplementedException"></exception>
         private void OnNumPadPressed(object source, NumPadPressedEventArgs e)
         {
             switch (e.NumPadButton)
@@ -304,9 +309,8 @@ namespace CreditKiosk.PurchaseWindow
             foreach (Purchase purchase in purchases)
             {
                 purchase.PersonId = Person.Id;
+                OnNewPurchase(new PurchaseEventArgs(purchase));
             }
-
-            Purchases = purchases;
             this.Close();
         }
 
