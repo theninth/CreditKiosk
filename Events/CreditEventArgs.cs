@@ -1,12 +1,11 @@
 ﻿using CreditKiosk.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CreditKiosk.Events
 {
+    /// <summary>
+    /// Event arguments provided for a credit.
+    /// </summary>
     public class CreditEventArgs : EventArgs
     {
         public Purchase Purchase { get; set; }

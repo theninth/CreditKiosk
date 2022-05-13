@@ -1,17 +1,8 @@
 ﻿using CreditKiosk.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace CreditKiosk.History
 {
@@ -20,12 +11,20 @@ namespace CreditKiosk.History
     /// </summary>
     public partial class CreditPurchaseWindow : Window
     {
-        private double amountAvailableForCredit;
-
+        /// <summary>
+        /// The purchase that should be credited.
+        /// </summary>
         public Purchase Purchase { get; set; }
 
+        /// <summary>
+        /// Amount to be credited.
+        /// </summary>
         public double Amount { get; private set; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="purchase">The purchase that should be credited.</param>
         public CreditPurchaseWindow(Purchase purchase)
         {
             this.Purchase = purchase;
@@ -41,6 +40,9 @@ namespace CreditKiosk.History
 #endif
         }
 
+        /// <summary>
+        /// Makes labels show current values.
+        /// </summary>
         private void UpdateLabels()
         {
             LblPerson.Content = Purchase.Person != null ? Purchase.Person.ToString() : string.Empty;
@@ -48,6 +50,9 @@ namespace CreditKiosk.History
             LblAvailableForCredit.Content = $"{Purchase.CreditableAmount:n2}";
         }
 
+        /// <summary>
+        /// Makes control behave diffrently depending on if amount is valid or not.
+        /// </summary>
         private void UpdateControlsOnValid()
         {
             double amount;
@@ -62,17 +67,25 @@ namespace CreditKiosk.History
             // Enables or disables credit button.
             BtnCredit.IsEnabled = isValidText && isValidAmount;
         }
+
+        /// <summary>
+        /// Event handler for Cancel button click.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event args</param>
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;
             this.Close();
         }
 
+        /// <summary>
+        /// Event handler for Credit button click.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event args</param>
         private void BtnCredit_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: Doing more than one crediting per purchase makes it possible
-            // to credit more than the initial purchase. This bug should be fixed.
-
             double amount;
 
             if (!Double.TryParse(TbxAmount.Text, out amount))
@@ -97,9 +110,11 @@ namespace CreditKiosk.History
             Close();
         }
 
-        private void TbxAmount_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            UpdateControlsOnValid();
-        }
+        /// <summary>
+        /// Event handler for when text in amount text box is changed.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event args</param>
+        private void TbxAmount_TextChanged(object sender, TextChangedEventArgs e) => UpdateControlsOnValid();
     }
 }

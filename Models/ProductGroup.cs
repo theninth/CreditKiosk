@@ -1,17 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CreditKiosk.Models
 {
+    /// <summary>
+    /// Class for a product group. Represents a table in Entity Framework.
+    /// </summary>
     public class ProductGroup
     {
         private string name;
 
+        /// <summary>
+        /// ID of product group.
+        /// </summary>
         public int Id { get; set; }
 
+        /// <summary>
+        /// Name of product group.
+        /// </summary>
         public string? Name {
             get { return name; }
             set
@@ -32,6 +38,12 @@ namespace CreditKiosk.Models
             }
         }
 
+        /// <summary>
+        /// Calculates the the total amount sold for in this Product group.
+        /// 
+        /// Save this to a temporary variable if used several times in a row when value is not changed
+        /// in beetween to relieve the cost of calculation in DB.
+        /// </summary>
         public double Total
         {
             get

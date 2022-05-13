@@ -3,8 +3,15 @@ using System;
 
 namespace CreditKiosk.Managers
 {
+    /// <summary>
+    /// Manage basic database operations for the Transaction tables Deposit, Purchase and Credit.
+    /// </summary>
     public class TransactionManager
     {
+        /// <summary>
+        /// Make a deposit.
+        /// </summary>
+        /// <param name="deposit">Deposit object.</param>
         public void Deposit(Deposit deposit)
         {
             using (var context = new KioskDbContext())
@@ -14,6 +21,10 @@ namespace CreditKiosk.Managers
             }
         }
 
+        /// <summary>
+        /// Make a purchase.
+        /// </summary>
+        /// <param name="purchase">Purchase object.</param>
         public void Purchase(Purchase purchase)
         {
             using (var context = new KioskDbContext())
@@ -23,6 +34,10 @@ namespace CreditKiosk.Managers
             }
         }
 
+        /// <summary>
+        /// Make a Credit.
+        /// </summary>
+        /// <param name="credit">Credit object.</param>
         public void Credit(Credit credit)
         {
             using (var context = new KioskDbContext())
@@ -32,13 +47,13 @@ namespace CreditKiosk.Managers
             }
         }
          
+        /// <summary>
+        /// Overload of credit method to create the Credit object from Purchase object and an amount.
+        /// </summary>
+        /// <param name="purchase">Purchase to base credit on.</param>
+        /// <param name="amount">Amount to credit.</param>
         public void Credit(Purchase purchase, double amount)
         {
-            if (amount > purchase.Amount)
-            {
-                throw new Exception("Kan inte kreditera ett högre belopp än ursprungsköpet!");
-            }
-
             Credit credit = new(purchase.Id);
             credit.Amount = amount;
             credit.Comment = $"Kreditering av köp {purchase.Id}";

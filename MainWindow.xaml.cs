@@ -17,10 +17,13 @@ namespace CreditKiosk
     /// </summary>
     public partial class MainWindow : Window
     {
-        Managers.PersonManager personManager;
-        Managers.ProductGroupManager productGroupManager;
-        Managers.TransactionManager transactionManager;
+        private Managers.PersonManager personManager;
+        private Managers.ProductGroupManager productGroupManager;
+        private Managers.TransactionManager transactionManager;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
@@ -42,6 +45,9 @@ namespace CreditKiosk
 #endif
         }
 
+        /// <summary>
+        /// Run when a new purchase is started.
+        /// </summary>
         private void OpenPurchase()
         {
             // This should not be able to happen because button should not be enabled.
@@ -68,7 +74,10 @@ namespace CreditKiosk
             UpdateLabelBalance();
         }
 
-        private void UpdateBtnVisibility()
+        /// <summary>
+        /// Set if buttons are enabled or disabled depending on if any items are selected.
+        /// </summary>
+        private void UpdateBtnEnabledDisabled()
         {
             bool itemIsSelected = ListboxPersons.SelectedIndex >= 0;
             BtnDeposit.IsEnabled = itemIsSelected;
@@ -76,6 +85,9 @@ namespace CreditKiosk
             BtnStartPurchase.IsEnabled = itemIsSelected;
         }
 
+        /// <summary>
+        /// Updates the content in listbox ListboxPersons from content in personManager.
+        /// </summary>
         private void UpdateListBoxPerson()
         {
             ListboxPersons.Items.Clear();
@@ -89,6 +101,9 @@ namespace CreditKiosk
             }
         }
 
+        /// <summary>
+        /// Updates balance label content.
+        /// </summary>
         private void UpdateLabelBalance()
         {
             if (ListboxPersons.SelectedItem == null)
@@ -102,20 +117,35 @@ namespace CreditKiosk
         }
 
 
-        /* ***************
+        /*****************
          * CUSTOM EVENTS *
          *************** */
 
+        /// <summary>
+        /// Event handler for when a ProductGroup is added.
+        /// </summary>
+        /// <param name="source">Source object.</param>
+        /// <param name="e">Event handler.</param>
         private void OnProductGroupAdded(object source, ProductGroupEventArgs e)
         {
             if (e.ProductGroup != null) productGroupManager.Add(e.ProductGroup);
         }
 
+        /// <summary>
+        /// Event handler for when a ProductGroup is deleted.
+        /// </summary>
+        /// <param name="source">Source object.</param>
+        /// <param name="e">Event handler.</param>
         private void OnProductGroupDeleted(object source, ProductGroupEventArgs e)
         {
             if (e.ProductGroup != null) productGroupManager.Remove(e.ProductGroup);
         }
 
+        /// <summary>
+        /// Event handler for when a Person is added.
+        /// </summary>
+        /// <param name="source">Source object.</param>
+        /// <param name="e">Event handler.</param>
         private void OnPersonAdded(object source, PersonAddEventArgs e)
         {
             if (e.Person != null) personManager.Add((Person)e.Person);
@@ -133,13 +163,23 @@ namespace CreditKiosk
             UpdateListBoxPerson();
         }
 
+        /// <summary>
+        /// Event handler for when a Person is deleted.
+        /// </summary>
+        /// <param name="source">Source object.</param>
+        /// <param name="e">Event handler.</param>
         private void OnPersonDeleted(object source, PersonEventArgs e)
         {
             if (e.Person != null) personManager.Remove((Person)e.Person);
             UpdateListBoxPerson();
         }
 
-        private void OnPersonCredited(object source, CreditEventArgs e)
+        /// <summary>
+        /// Event handler for when a transaction is credited.
+        /// </summary>
+        /// <param name="source">Source object.</param>
+        /// <param name="e">Event handler.</param>
+        private void OnCredited(object source, CreditEventArgs e)
         {
             if (e.Purchase == null) return;
 
@@ -154,10 +194,15 @@ namespace CreditKiosk
             UpdateLabelBalance();
         }
 
-        /* ************
+        /**************
          * GUI EVENTS *
-         ************ */
+         **************/
 
+        /// <summary>
+        /// Event handler for exit button click.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event handler.</param>
         private void BtnExit_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult frm = MessageBox.Show(
@@ -165,6 +210,11 @@ namespace CreditKiosk
             if (frm == MessageBoxResult.Yes) Close();
         }
 
+        /// <summary>
+        /// Event handler for Product group button click.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event handler.</param>
         private void BtnProductGroups_Click(object sender, RoutedEventArgs e)
         {
             ProductGroupsWindow frm = new(productGroupManager.GetAll());
@@ -173,6 +223,11 @@ namespace CreditKiosk
             frm.ShowDialog();
         }
 
+        /// <summary>
+        /// Event handler for persons button click.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event handler.</param>
         private void BtnPersons_Click(object sender, RoutedEventArgs e)
         {
             PersonsWindow frm = new PersonsWindow(personManager.GetAllSorted());
@@ -181,25 +236,50 @@ namespace CreditKiosk
             frm.ShowDialog();
         }
 
+        /// <summary>
+        /// Event handler for history button click.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event handler.</param>
         private void BtnHistory_Click(object sender, RoutedEventArgs e)
         {
             Person selectedPerson = (Person)ListboxPersons.SelectedItem;
 
             HistoryWindow frm = new(personManager.GetAllSorted(), selectedPerson);
-            frm.PersonCredited += OnPersonCredited;
+            frm.PersonCredited += OnCredited;
             frm.ShowDialog();
         }
 
+        /// <summary>
+        /// Event handler for start purchase button click.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event handler.</param>
         private void BtnStartPurchase_Click(object sender, RoutedEventArgs e) => OpenPurchase();
 
+        /// <summary>
+        /// Event handler for when selection changed in the listbox ListboxPersons
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event handler.</param>
         private void ListboxPersons_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            UpdateBtnVisibility();
+            UpdateBtnEnabledDisabled();
             UpdateLabelBalance();
         }
 
+        /// <summary>
+        /// Event handler for when item in listbox ListboxPersons i double clicked (i. e. start new pay).
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event handler.</param>
         private void ListboxPersons_MouseDoubleClick(object sender, MouseButtonEventArgs e) => OpenPurchase();
 
+        /// <summary>
+        /// Event handler for button deposit is clicked.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event handler.</param>
         private void BtnDeposit_Click(object sender, RoutedEventArgs e)
         {
             Person selectedPerson = (Person)ListboxPersons.SelectedItem;

@@ -16,11 +16,18 @@ namespace CreditKiosk.PurchaseWindow
     /// </summary>
     public partial class PurchaseWindow : Window
     {
+        /// <summary>
+        /// Used to make numpad create the right decimal seperator.
+        /// </summary>
         private readonly string DECIMAL_SEPARATOR = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
 
         private Person? person;
         private ProductGroup[]? productGroups;
 
+
+        /// <summary>
+        /// Person connected to this purchase.
+        /// </summary>
         public Person? Person
         {
             get { return person; }
@@ -31,6 +38,9 @@ namespace CreditKiosk.PurchaseWindow
             }
         }
 
+        /// <summary>
+        /// Purchases provided for the windows parent to get purchases.
+        /// </summary>
         public List<Purchase>? Purchases;
 
         /// <summary>
@@ -47,6 +57,9 @@ namespace CreditKiosk.PurchaseWindow
             }
         }
         
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public PurchaseWindow()
         {
             InitializeComponent();
@@ -59,6 +72,11 @@ namespace CreditKiosk.PurchaseWindow
 #endif
         }
 
+        /// <summary>
+        /// Adds an item as PurchaseItem to listview LvItems.
+        /// </summary>
+        /// <param name="productGroup">ProductGroup connected to the PurchaseItem</param>
+        /// <param name="amount">Amount of item.</param>
         private void AddItem(ProductGroup productGroup, double amount)
         {
             PurchaseItem item;
@@ -80,6 +98,9 @@ namespace CreditKiosk.PurchaseWindow
             UpdateBtnPay();
         }
 
+        /// <summary>
+        /// Checks if TbxItemAmount is valid, if not, change textbox background and disable buttons.
+        /// </summary>
         private void CheckInvalidAmount()
         {
             double amount;
@@ -93,6 +114,10 @@ namespace CreditKiosk.PurchaseWindow
             }
         }
 
+        /// <summary>
+        /// Calculate total cost of PurchseItems in listview LvItems.
+        /// </summary>
+        /// <returns></returns>
         private double CalcTotal()
         {
             return LvItems.Items.Cast<PurchaseItem>().ToList().Sum(i => i.Amount);
@@ -117,6 +142,9 @@ namespace CreditKiosk.PurchaseWindow
             return true;
         }
 
+        /// <summary>
+        /// Creates the Product group buttons according th the list in field productGroups.
+        /// </summary>
         private void UpdateProductGroupButtons()
         {
             ProductGroupButtons.Children.Clear();
@@ -139,12 +167,18 @@ namespace CreditKiosk.PurchaseWindow
             }
         }
 
+        /// <summary>
+        /// Enables/disables Delete button depending on if any item is selected.
+        /// </summary>
         private void UpdateDeleteButton()
         {
             bool itemSelected = LvItems.SelectedIndex >= 0;
             BtnDelete.IsEnabled = itemSelected;
         }
 
+        /// <summary>
+        /// Update labels connected to person, like name, balance etc.
+        /// </summary>
         private void UpdatePersonElements()
         {
             if (person == null) return;
@@ -152,6 +186,9 @@ namespace CreditKiosk.PurchaseWindow
             LblBalance.Content = $"Saldo: {person.Balance:#,0.00} Kr";
         }
 
+        /// <summary>
+        /// Enables/disables BtnPay depending on state of other controls.
+        /// </summary>
         private void UpdateBtnPay()
         {
             bool hasItems = LvItems.Items.Count > 0;
@@ -160,8 +197,22 @@ namespace CreditKiosk.PurchaseWindow
 
         }
 
+        /// <summary>
+        /// Update label with total sum.
+        /// </summary>
         private void UpdateTotal() => LblTotal.Content = $"Totalt: {CalcTotal():#,0.00} Kr.";
 
+
+        /*************************
+         * CUSTOM EVENT HANDLERS * 
+         *************************/
+
+        /// <summary>
+        /// Event handler for when numpad is pressed.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        /// <exception cref="NotImplementedException"></exception>
         private void OnNumPadPressed(object source, NumPadPressedEventArgs e)
         {
             switch (e.NumPadButton)
@@ -180,6 +231,16 @@ namespace CreditKiosk.PurchaseWindow
             }
         }
 
+        /*******************************
+         * STANDARD GUI EVENT HANDLERS *
+         *******************************/
+
+        /// <summary>
+        /// Event handler for when a productgroup button is pressed.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event argument.</param>
+        /// <exception cref="ArgumentException"></exception>
         private void BtnProductGroup_Click(object sender, RoutedEventArgs e)
         {
             double amount;
@@ -209,17 +270,22 @@ namespace CreditKiosk.PurchaseWindow
             }
         }
 
-        private void TbxItemAmount_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            CheckInvalidAmount();
-        }
-
+        /// <summary>
+        /// Event handler for when text in TbxItemAmount changed.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event argument.</param>
         private void BtnAbort_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult frm = MessageBox.Show("Är du säker på att du vill avbryta", "Avbryta", MessageBoxButton.YesNo);
             if (frm == MessageBoxResult.Yes) this.Close();
         }
 
+        /// <summary>
+        /// Event handler for when Pay button is pressed.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event arguments.</param>
         private void BtnPay_Click(object sender, RoutedEventArgs e)
         {
             if (!ContinueWithHalfPayment()) return;
@@ -236,6 +302,11 @@ namespace CreditKiosk.PurchaseWindow
             this.Close();
         }
 
+        /// <summary>
+        /// Event handler for when Delete button is pressed.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event arguments.</param>
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
             if (LvItems.SelectedIndex >= 0)
@@ -245,10 +316,19 @@ namespace CreditKiosk.PurchaseWindow
             }
         }
 
-        private void LvItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            UpdateDeleteButton();
-        }
+        /// <summary>
+        /// Event handler for when selection in listview LvItems is changed.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event arguments.</param>
+        private void LvItems_SelectionChanged(object sender, SelectionChangedEventArgs e) => UpdateDeleteButton();
+
+        /// <summary>
+        /// Event handler for when text in TbxItemAmount changed.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event argument.</param>
+        private void TbxItemAmount_TextChanged(object sender, TextChangedEventArgs e) => CheckInvalidAmount();
     }
 }
 

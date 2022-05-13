@@ -4,8 +4,15 @@ using System.Linq;
 
 namespace CreditKiosk.Managers
 {
+    /// <summary>
+    /// Manage basic database operations for the Person table.
+    /// </summary>
     class PersonManager
     {
+        /// <summary>
+        /// Add Person.
+        /// </summary>
+        /// <param name="person">Person object to be added</param>
         public void Add(Person person)
         {
             using (var context = new KioskDbContext())
@@ -15,6 +22,10 @@ namespace CreditKiosk.Managers
             }
         }
 
+        /// <summary>
+        /// Removes Person.
+        /// </summary>
+        /// <param name="person">Person object to be removed.</param>
         public void Remove(Person person)
         {
             using (var context = new KioskDbContext())
@@ -24,6 +35,10 @@ namespace CreditKiosk.Managers
             }
         }
 
+        /// <summary>
+        /// Get all persons, sorted by first name.
+        /// </summary>
+        /// <returns>Persons sorted by first name.</returns>
         public List<Person> GetAllSorted()
         {
             using (var context = new KioskDbContext())

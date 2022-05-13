@@ -1,14 +1,19 @@
 ﻿using CreditKiosk.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CreditKiosk.PurchaseWindow.Helpers
 {
+    /// <summary>
+    /// Helpers used in PurchaseWindow
+    /// </summary>
     internal static class PurchaseHelpers
     {
+        /// <summary>
+        /// Takes a list of PurchaseItems and make them a list of single Purchase items with each ProductGroup summed.
+        /// </summary>
+        /// <param name="purchaseItems"></param>
+        /// <returns>A list of Purchase items.</returns>
         public static List<Purchase> PurchasesGroupedByProduceGroup(IEnumerable<PurchaseItem> purchaseItems)
         {
             List<Purchase> purchases = new();

@@ -1,16 +1,18 @@
 ﻿using CreditKiosk.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CreditKiosk.PurchaseWindow
 {
+    /// <summary>
+    /// A single purchase item to populate List view in Purchase window.
+    /// </summary>
     internal class PurchaseItem
     {
         private double amount;
 
+        /// <summary>
+        /// Amount of purchase item.
+        /// </summary>
         public double Amount {
             get
             {
@@ -24,13 +26,22 @@ namespace CreditKiosk.PurchaseWindow
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException("Amount could not be 0 or less");
+                    throw new ArgumentOutOfRangeException("Amount can not be 0 or less");
                 }
             }
         }
 
+        /// <summary>
+        /// The items Product group.
+        /// </summary>
         public ProductGroup ProductGroup { get; set; }
 
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="productGroup">Product group of the item.</param>
+        /// <param name="amount">Amount of the item.</param>
         public PurchaseItem(ProductGroup productGroup, double amount)
         {
             ProductGroup = productGroup;

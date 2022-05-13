@@ -2,15 +2,27 @@
 
 namespace CreditKiosk.Models
 {
-    public class Transaction
+    /// <summary>
+    /// Base class for transactions.
+    /// </summary>
+    public abstract class Transaction
     {
         // This should really be decimal, but that won't work with Sqlite using Linq.
         double _amount;
 
+        /// <summary>
+        /// Id of the transaction.
+        /// </summary>
         public int Id { get; set; }
 
+        /// <summary>
+        /// Date and time for the transaction.
+        /// </summary>
         public DateTime Date { get; set; }
 
+        /// <summary>
+        /// Amount of the transaction.
+        /// </summary>
         public double Amount
         {
             get { return _amount; }
@@ -27,8 +39,14 @@ namespace CreditKiosk.Models
             }
         }
 
+        /// <summary>
+        /// An optional comment of the transaction.
+        /// </summary>
         public string Comment { get; set; } = string.Empty;
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public Transaction()
         {
             Date = DateTime.Now;

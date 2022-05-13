@@ -42,10 +42,23 @@ namespace CreditKiosk.Persons
             }
         }
 
+        /// <summary>
+        /// Fire events.
+        /// </summary>
+        /// <param name="e">Person add event arguments.</param>
         protected virtual void OnPersonAdded(PersonAddEventArgs e) => PersonAdded?.Invoke(this, e);
 
+        /// <summary>
+        /// Fire events.
+        /// </summary>
+        /// <param name="e">Generic Person event arguments.</param>
         protected virtual void OnPersonDeleted(PersonEventArgs e) => PersonDeleted?.Invoke(this, e);
 
+        /// <summary>
+        /// Event handler for Button add click.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
             AddPersonWindow frm = new();
@@ -59,6 +72,11 @@ namespace CreditKiosk.Persons
             }
         }
 
+        /// <summary>
+        /// Event handler for Button delete click.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
             Person? person = LbPersons.SelectedItem as Person;
@@ -71,6 +89,11 @@ namespace CreditKiosk.Persons
             LbPersons.Items.Remove(person);
         }
 
+        /// <summary>
+        /// Event handler for Button done click.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void BtnDone_Click(object sender, RoutedEventArgs e) => this.Close();
     }
 }

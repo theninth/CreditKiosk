@@ -3,10 +3,16 @@ using System;
 
 namespace CreditKiosk.Events
 {
+    /// <summary>
+    /// Event arguments for when a person is added PersonsWindow.
+    /// </summary>
     public class PersonAddEventArgs : PersonEventArgs
     {
         private double initialDeposit;
 
+        /// <summary>
+        /// The initial deposit amount.
+        /// </summary>
         public double InitialDeposit {
             get
             {
@@ -25,6 +31,11 @@ namespace CreditKiosk.Events
             }
         }
 
+        /// <summary>
+        /// Construcot
+        /// </summary>
+        /// <param name="person">Person object connected to the deposit.</param>
+        /// <param name="initialDeposit">Amount to be deposit.</param>
         public PersonAddEventArgs(Person person, double initialDeposit) : base(person)
         {
             this.initialDeposit = initialDeposit;

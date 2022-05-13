@@ -20,8 +20,14 @@ namespace CreditKiosk.Persons
     /// </summary>
     public partial class AddPersonWindow : Window
     {
+        /// <summary>
+        /// Person object to be used by the window's parent.
+        /// </summary>
         public Person Person { get; private set; }
 
+        /// <summary>
+        /// Amount for the initial deposit to be used by the window's parent.
+        /// </summary>
         public double InitialDeposit { get; private set; } = 0;
 
         public AddPersonWindow()
@@ -35,6 +41,10 @@ namespace CreditKiosk.Persons
 #endif
         }
 
+        /// <summary>
+        /// Create Person object from values in form.
+        /// </summary>
+        /// <returns>Person created.</returns>
         private Person? createPerson()
         {
             Person person = new Person();
@@ -68,6 +78,11 @@ namespace CreditKiosk.Persons
             return successParse && isNotNegative;
         }
 
+        /// <summary>
+        /// Event handler for Button add click.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
             double initialDeposit;
@@ -86,8 +101,19 @@ namespace CreditKiosk.Persons
             this.Close();
         }
 
+        /// <summary>
+        /// Event handler for Button cancel click.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void BtnCancel_Click(object sender, RoutedEventArgs e) => this.Close();
 
+        /// <summary>
+        /// Event handler for when text in initial deposit text box is changed. This method
+        /// validates that text box.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void TbxInitialDeposit_TextChanged(object sender, TextChangedEventArgs e)
         {
             bool isValid = IsInitialDepositValid();

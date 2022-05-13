@@ -33,12 +33,20 @@ namespace CreditKiosk.ProductGroups
 #endif
         }
 
-
+        /// <summary>
+        /// Checks if TbxName text is valid.
+        /// </summary>
+        /// <returns>Is valid, true/false</returns>
         private bool isNameValid()
         {
             return TbxName.Text.Trim().Length > 0;
         }
 
+        /// <summary>
+        /// Event handler for Button add click.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
             string name = TbxName.Text.Trim();
@@ -52,11 +60,21 @@ namespace CreditKiosk.ProductGroups
             this.Close();
         }
 
+        /// <summary>
+        /// Event handler for Button cancel click.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
+        /// <summary>
+        /// Event handler for when TbxName text is changed.
+        /// </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="e">Event arguments</param>
         private void TbxName_TextChanged(object sender, TextChangedEventArgs e)
         {
             bool isValid = isNameValid();

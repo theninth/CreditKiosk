@@ -3,12 +3,15 @@
   <Class Name="CreditKiosk.Models.Deposit">
     <Position X="9.75" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AIAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Deposit.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Person" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="CreditKiosk.Models.Person">
-    <Position X="11.75" Y="3.25" Width="1.5" />
+    <Position X="7.75" Y="8.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAEAAAAAAAAAEAAgAAAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
       <FileName>Models\Person.cs</FileName>
@@ -17,29 +20,37 @@
   <Class Name="CreditKiosk.Models.Purchase">
     <Position X="7.75" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAIAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AIAAAIAAAAQAAAAEAAAAAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Purchase.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="ProductGroup" />
-    </ShowAsAssociation>
-  </Class>
-  <Class Name="CreditKiosk.Models.Transaction">
-    <Position X="5.5" Y="2" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AIACAAAEAAAAAAAEAAAAAACAAAAAAAABAABAAAAAAAA=</HashCode>
-      <FileName>Models\Transaction.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
       <Property Name="Person" />
     </ShowAsAssociation>
   </Class>
+  <Class Name="CreditKiosk.Models.Transaction">
+    <Position X="8.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAEAAAAAAAAAAAAAACAAAAAAAABAABAAAAAAAA=</HashCode>
+      <FileName>Models\Transaction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="CreditKiosk.Models.ProductGroup">
-    <Position X="3.25" Y="5.25" Width="1.5" />
+    <Position X="4.5" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAEAAAAAAQAAAAEQAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\ProductGroup.cs</FileName>
     </TypeIdentifier>
+  </Class>
+  <Class Name="CreditKiosk.Models.Credit">
+    <Position X="4.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Credit.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Purchase" />
+    </ShowAsAssociation>
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

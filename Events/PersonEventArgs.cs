@@ -3,8 +3,14 @@ using System;
 
 namespace CreditKiosk.Events
 {
+    /// <summary>
+    /// Generiv Event arguments for something where a Person is needed to be supplied.
+    /// </summary>
     public class PersonEventArgs : EventArgs
     {
+        /// <summary>
+        /// Supplied Person object.
+        /// </summary>
         public Person Person { get; set; }
 
         /// <summary>

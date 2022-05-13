@@ -3,9 +3,19 @@ using System;
 
 namespace CreditKiosk.Events
 {
+    /// <summary>
+    /// Event arguments for a button press on a num pad.
+    /// </summary>
     public class NumPadPressedEventArgs : EventArgs
     {
+        /// <summary>
+        /// Kind of num pad button pressed (example: Digit, Clear or Comma).
+        /// </summary>
         public NumPadButtons NumPadButton { get; set; }
+        
+        /// <summary>
+        /// If button pressed is a digit, it will be supplied with this property.
+        /// </summary>
         public int Digit { get; set; } = -1;
 
         /// <summary>

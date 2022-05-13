@@ -22,8 +22,16 @@ namespace CreditKiosk.History
     /// </summary>
     public partial class HistoryWindow : Window
     {
+        /// <summary>
+        /// Selected Person object.
+        /// </summary>
         public List<Person> Persons { get; set; }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="persons">List of Person objects.</param>
+        /// <param name="selectedPerson">Initial selected person.</param>
         public HistoryWindow(List<Person> persons, Person selectedPerson)
         {
             this.Persons = persons;
@@ -31,6 +39,7 @@ namespace CreditKiosk.History
 
             UpdateLbPersons();
 
+            // Sets initialy selected person.
             LbPersons.SelectedItem = LbPersons.Items
                 .Cast<Person>()
                 .ToList()
@@ -44,6 +53,9 @@ namespace CreditKiosk.History
 #endif
         }
 
+        /// <summary>
+        /// Subscribe to get info when person is credited.
+        /// </summary>
         public event EventHandler<CreditEventArgs>? PersonCredited;
 
         private void UpdateLbPersons()
@@ -55,6 +67,10 @@ namespace CreditKiosk.History
             }
         }
 
+        /// <summary>
+        /// Set Balance label for a certain person object.
+        /// </summary>
+        /// <param name="person">Person to set label for.</param>
         private void UpdateLblBalance(Person? person)
         {
             if (person == null)
@@ -67,6 +83,11 @@ namespace CreditKiosk.History
             }
         }
 
+        /// <summary>
+        /// Update lists to contain data for the Person object selected.
+        /// </summary>
+        /// <param name="person">Person object to set lists for.</param>
+        /// <exception cref="Exception">Some tables seems to be empty. This should not happen.</exception>
         private void UpdateLists(Person person)
         {
             using (var context = new KioskDbContext())
@@ -121,6 +142,10 @@ namespace CreditKiosk.History
             }
         }
 
+        /// <summary>
+        /// Fire events.
+        /// </summary>
+        /// <param name="e">Credit event arguments.</param>
         protected virtual void OnCredit(CreditEventArgs e) => PersonCredited?.Invoke(this, e);
 
 
@@ -128,6 +153,11 @@ namespace CreditKiosk.History
         * GUI EVENTS *
         ************ */
 
+        /// <summary>
+        /// Fires when credit button was clicked.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event arguments.</param>
         private void BtnCredit_Click(object sender, RoutedEventArgs e)
         {
             Purchase purchase = (Purchase)LvPurchases.SelectedItem;
@@ -158,11 +188,21 @@ namespace CreditKiosk.History
             
         }
 
+        /// <summary>
+        /// Fires when done button was clicked.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event arguments.</param>
         private void BtnDone_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
+        /// <summary>
+        /// Fires when a diffrent person was selected.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event arguments.</param>
         private void LbPersons_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Person? selectedPerson = (Person)LbPersons.SelectedItem;
@@ -175,16 +215,30 @@ namespace CreditKiosk.History
 
         }
 
-        private void LvDeposits_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-        }
+        /// <summary>
+        /// Fires when a diffrent deposit was selected.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event arguments.</param>
+        private void LvDeposits_SelectionChanged(object sender, SelectionChangedEventArgs e) { }
 
+        /// <summary>
+        /// Fires when a different purchase was selected.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event arguments.</param>
         private void LvPurchases_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             bool purchaseSelected = LvPurchases.SelectedIndex >= 0;
             BtnCredit.IsEnabled = purchaseSelected;
         }
 
+        /// <summary>
+        /// Fires when a different tab is chosen (and when the tab control childrens are
+        /// changing selection, but those are ignored by the method).
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event arguments.</param>
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Really ugly hack to make sure the changes are in the tabcontrol and not the children.
@@ -194,14 +248,7 @@ namespace CreditKiosk.History
             if (currentTabItem == null) return;  // Should not happen
 
             // Make check if button should be shown or not.
-            if (currentTabItem.Name == "TabItemPurchases")
-            {
-                BtnCredit.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                BtnCredit.Visibility = Visibility.Hidden;
-            }
+            BtnCredit.Visibility = currentTabItem.Name == "TabItemPurchases" ? Visibility.Visible : Visibility.Hidden;
         }
     }
 }
