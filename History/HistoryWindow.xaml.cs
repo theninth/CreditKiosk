@@ -58,6 +58,8 @@ namespace CreditKiosk.History
         /// </summary>
         public event EventHandler<CreditEventArgs>? PersonCredited;
 
+        public event EventHandler<PersonEventArgs>? PersonSelectionChanged;
+
         private void UpdateLbPersons()
         {
             LbPersons.Items.Clear();
@@ -143,11 +145,16 @@ namespace CreditKiosk.History
         }
 
         /// <summary>
-        /// Fire events.
+        /// Fire events for when a person is credited.
         /// </summary>
         /// <param name="e">Credit event arguments.</param>
         protected virtual void OnCredit(CreditEventArgs e) => PersonCredited?.Invoke(this, e);
 
+        /// <summary>
+        /// Fire events for when a new person is selected.
+        /// </summary>
+        /// <param name="e"></param>
+        protected virtual void OnPersonSelectionChanged(PersonEventArgs e) => PersonSelectionChanged?.Invoke(this, e);
 
         /*************
         * GUI EVENTS *
@@ -208,11 +215,10 @@ namespace CreditKiosk.History
             Person? selectedPerson = (Person)LbPersons.SelectedItem;
             if (selectedPerson != null)
             {
+                OnPersonSelectionChanged(new PersonEventArgs(selectedPerson));
                 UpdateLists(selectedPerson);
+                UpdateLblBalance(selectedPerson);
             }
-
-            UpdateLblBalance(selectedPerson);
-
         }
 
         /// <summary>

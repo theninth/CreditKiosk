@@ -6,6 +6,7 @@ using CreditKiosk.ProductGroups;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -164,6 +165,17 @@ namespace CreditKiosk
         }
 
         /// <summary>
+        /// Event handler for when another window changes what Person is selected.
+        /// </summary>
+        /// <param name="source">Source object.</param>
+        /// <param name="e">Event handler.</param>
+        private void OnPersonSelectionChanged(object source, PersonEventArgs e)
+        {
+            // Selects the person in ListBox with the same Id (i. e. the same person).
+            ListboxPersons.SelectedItem = ListboxPersons.Items.Cast<Person>().ToList().Where(i => i.Id == e.Person.Id).Single();
+        }
+
+        /// <summary>
         /// Event handler for when a transaction is credited.
         /// </summary>
         /// <param name="source">Source object.</param>
@@ -247,6 +259,7 @@ namespace CreditKiosk
 
             HistoryWindow frm = new(personManager.GetAllSorted(), selectedPerson);
             frm.PersonCredited += OnCredited;
+            frm.PersonSelectionChanged += OnPersonSelectionChanged;
             frm.ShowDialog();
         }
 
