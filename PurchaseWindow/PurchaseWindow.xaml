@@ -54,6 +54,7 @@
                 <Label Margin="5" FontWeight="Bold">Kr.</Label>
             </StackPanel>
             <Label Margin="5" Name="LblTotal" FontWeight="Bold">Totalt: 0.00 Kr</Label>
+            <Label Margin="5" Name="LblLeftAfterPurchase" MinWidth="180" Visibility="Hidden" />
         </StackPanel>
         
         <!-- Contains numpad -->

@@ -94,7 +94,7 @@ namespace CreditKiosk.PurchaseWindow
             LvItems.Items.Add(item);
             TbxItemAmount.Text = String.Empty;
 
-            UpdateTotal();
+            UpdateTotalLeftAfterPurchase();
             UpdateBtnPay();
         }
 
@@ -199,21 +199,28 @@ namespace CreditKiosk.PurchaseWindow
         }
 
         /// <summary>
-        /// Update label with total sum.
+        /// Update label with total sum and label with left after purchase.
         /// </summary>
-        private void UpdateTotal() => LblTotal.Content = $"Totalt: {CalcTotal():#,0.00} Kr.";
+        private void UpdateTotalLeftAfterPurchase()
+        {
+            double total = CalcTotal();
+            double leftAfterPurchase = Person != null ? Person.Balance - total : 0;
+            LblTotal.Content = $"Totalt: {total:#,0.00} Kr.";
+            LblLeftAfterPurchase.Content = $"Kvar efter köp: {leftAfterPurchase:#,0.00} Kr.";
+            LblLeftAfterPurchase.Visibility = Visibility.Visible;
+        }
 
 
         /*************************
          * CUSTOM EVENT HANDLERS * 
          *************************/
 
-        /// <summary>
-        /// Event handler for when numpad is pressed.
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="e"></param>
-        /// <exception cref="NotImplementedException"></exception>
+            /// <summary>
+            /// Event handler for when numpad is pressed.
+            /// </summary>
+            /// <param name="source"></param>
+            /// <param name="e"></param>
+            /// <exception cref="NotImplementedException"></exception>
         private void OnNumPadPressed(object source, NumPadPressedEventArgs e)
         {
             switch (e.NumPadButton)
@@ -313,7 +320,7 @@ namespace CreditKiosk.PurchaseWindow
             if (LvItems.SelectedIndex >= 0)
             {
                 LvItems.Items.RemoveAt(LvItems.SelectedIndex);
-                UpdateTotal();
+                UpdateTotalLeftAfterPurchase();
             }
         }
 
