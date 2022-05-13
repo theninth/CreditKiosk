@@ -50,7 +50,12 @@ namespace CreditKiosk.Models
             {
                 using (var context = new KioskDbContext())
                 {
-                    return context.Purchases.Where(p => p.ProductGroupId == this.Id).Sum(i => i.Amount);
+#pragma warning disable CS8604 // Possible null reference argument.
+                    double sumOfPurchases = context.Purchases.Where(p => p.ProductGroupId == this.Id).Sum(i => i.Amount);
+                    double sumOfCredits = context.Credits.Where(p => p.Purchase.ProductGroupId == this.Id).Sum(i => i.Amount);
+#pragma warning restore CS8604 // Possible null reference argument.
+
+                    return sumOfPurchases - sumOfCredits;
                 }
             }
         }
