@@ -36,7 +36,7 @@ namespace CreditKiosk.Models
                 {
 #pragma warning disable CS8604 // Possible null reference argument.
                     double depositSum = context.Deposits.Where(p => p.PersonId == this.Id).Sum(i => i.Amount);
-                    double creditSum = context.Credits.Where(p => p.Purchase.Id == this.Id).Sum(i => i.Amount);
+                    double creditSum = context.Credits.Where(p => p.Purchase.Person.Id == this.Id).Sum(i => i.Amount);
                     double purchaseSum = context.Purchases.Where(p => p.PersonId == this.Id).Sum(i => i.Amount);
 #pragma warning restore CS8604 // Possible null reference argument.
                     double sum = depositSum + creditSum - purchaseSum;
