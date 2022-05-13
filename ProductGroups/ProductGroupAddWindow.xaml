@@ -13,7 +13,7 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="Lägg till produktgrupp" Height="250" Width="300" MinWidth="200" MinHeight="250">
+        Title="Lägg till produktgrupp" Height="300" Width="300" MinWidth="200" MinHeight="300">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />

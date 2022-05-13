@@ -72,14 +72,36 @@ namespace CreditKiosk.ProductGroups
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
+            MessageBoxImage icon;
+            string message;
+            string title = "Är du säker?";
+
             ProductGroup? productGroup = LvProductGroups.SelectedItem as ProductGroup;
 
             if (productGroup == null) return;
 
-            ProductGroupEventArgs productGroupEventArgs = new ProductGroupEventArgs(productGroup);
-            OnProductGroupDeleted(productGroupEventArgs);
+            if (productGroup.Total > 0)
+            {
+                message = "Produktgruppen innehåller varor, om du raderar den kommer även de kopplade köpen försvinna." +
+                    Environment.NewLine + Environment.NewLine +
+                    "Är du helt säker på att du vill radera den?";
+                icon = MessageBoxImage.Warning;
+            }
+            else
+            {
+                message = "Är du säker på att du vill radera produktgruppen (inga köp försvinner)?";
+                icon = MessageBoxImage.Information;
+            }
 
-            LvProductGroups.Items.Remove(productGroup);
+            MessageBoxResult result = MessageBox.Show(message, title, MessageBoxButton.YesNo, icon);
+            if (result == MessageBoxResult.Yes)
+            {
+                ProductGroupEventArgs productGroupEventArgs = new ProductGroupEventArgs(productGroup);
+                OnProductGroupDeleted(productGroupEventArgs);
+
+                LvProductGroups.Items.Remove(productGroup);
+
+            }
         }
 
         private void BtnDone_Click(object sender, RoutedEventArgs e) => this.Close();

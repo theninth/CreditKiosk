@@ -2,6 +2,7 @@
 using CreditKiosk.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 
 namespace CreditKiosk.Persons
@@ -79,14 +80,41 @@ namespace CreditKiosk.Persons
         /// <param name="e">Event arguments</param>
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
+            int noOfTransactions = 0;
+            MessageBoxImage icon;
+            string message;
+            string title = "Är du säker?";
             Person? person = LbPersons.SelectedItem as Person;
 
             if (person == null) return;
-            
-            PersonEventArgs personEventArgs = new PersonEventArgs(person);
-            OnPersonDeleted(personEventArgs);
 
-            LbPersons.Items.Remove(person);
+            using (var context = new KioskDbContext())
+            {
+                noOfTransactions += context.Deposits.Where(i => i.PersonId == person.Id).Count();
+                noOfTransactions += context.Purchases.Where(i => i.PersonId == person.Id).Count();
+            }
+
+            if (noOfTransactions > 0)
+            {
+                message = "Kunden har köpt kopplade till sig. Om du tar bort denne försvinner dessa." +
+                    Environment.NewLine + Environment.NewLine +
+                    "Är du helt säker på att du vill radera kunden?";
+                icon = MessageBoxImage.Warning;
+            } 
+            else
+            {
+                message = "Är du säker på att du vill radera person (inga köp påverkas)?";
+                icon = MessageBoxImage.Information;
+            }
+
+            MessageBoxResult result = MessageBox.Show(message, title, MessageBoxButton.YesNo, icon);
+            if (result == MessageBoxResult.Yes)
+            {
+                PersonEventArgs personEventArgs = new PersonEventArgs(person);
+                OnPersonDeleted(personEventArgs);
+                LbPersons.Items.Remove(person);
+            }
+            
         }
 
         /// <summary>
