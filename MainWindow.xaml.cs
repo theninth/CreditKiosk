@@ -113,10 +113,12 @@ namespace CreditKiosk
         /// </summary>
         private void UpdateBtnEnabledDisabled()
         {
-            bool itemIsSelected = ListboxPersons.SelectedIndex >= 0;
-            BtnDeposit.IsEnabled = itemIsSelected;
-            BtnHistory.IsEnabled = itemIsSelected;
-            BtnStartPurchase.IsEnabled = itemIsSelected;
+            bool personIsSelected = ListboxPersons.SelectedIndex >= 0;
+            BtnDeposit.IsEnabled = personIsSelected;
+            BtnHistory.IsEnabled = personIsSelected;
+            BtnStartPurchase.IsEnabled =
+                ListboxPersons.SelectedItem != null &&
+                ((Person)ListboxPersons.SelectedItem).Balance > 0;
         }
 
         /// <summary>
@@ -249,11 +251,34 @@ namespace CreditKiosk
         {
             transactionManager.Purchase(e.Purchase);
             UpdateLabelBalance();
+            UpdateBtnEnabledDisabled();
         }
 
         /**************
          * GUI EVENTS *
          **************/
+
+        /// <summary>
+        /// Event handler for button deposit is clicked.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event handler.</param>
+        private void BtnDeposit_Click(object sender, RoutedEventArgs e)
+        {
+            Person selectedPerson = (Person)ListboxPersons.SelectedItem;
+
+            if (selectedPerson == null) return;
+
+            DepositWindow.DepositWindow frm = new(selectedPerson);
+            frm.ShowDialog();
+
+            if (frm.DialogResult != null && (bool)frm.DialogResult && frm.Deposit != null)
+            {
+                transactionManager.Deposit(frm.Deposit);
+            }
+            UpdateLabelBalance();
+            UpdateBtnEnabledDisabled();
+        }
 
         /// <summary>
         /// Event handler for exit button click.
@@ -268,15 +293,17 @@ namespace CreditKiosk
         }
 
         /// <summary>
-        /// Event handler for Product group button click.
+        /// Event handler for history button click.
         /// </summary>
         /// <param name="sender">Sender object.</param>
         /// <param name="e">Event handler.</param>
-        private void BtnProductGroups_Click(object sender, RoutedEventArgs e)
+        private void BtnHistory_Click(object sender, RoutedEventArgs e)
         {
-            ProductGroupsWindow frm = new(productGroupManager.GetAll());
-            frm.ProductGroupAdded += OnProductGroupAdded;
-            frm.ProductGroupDeleted += OnProductGroupDeleted;
+            Person selectedPerson = (Person)ListboxPersons.SelectedItem;
+
+            HistoryWindow frm = new(personManager.GetAllSorted(), selectedPerson);
+            frm.PersonCredited += OnCredited;
+            frm.PersonSelectionChanged += OnPersonSelectionChanged;
             frm.ShowDialog();
         }
 
@@ -294,17 +321,15 @@ namespace CreditKiosk
         }
 
         /// <summary>
-        /// Event handler for history button click.
+        /// Event handler for Product group button click.
         /// </summary>
         /// <param name="sender">Sender object.</param>
         /// <param name="e">Event handler.</param>
-        private void BtnHistory_Click(object sender, RoutedEventArgs e)
+        private void BtnProductGroups_Click(object sender, RoutedEventArgs e)
         {
-            Person selectedPerson = (Person)ListboxPersons.SelectedItem;
-
-            HistoryWindow frm = new(personManager.GetAllSorted(), selectedPerson);
-            frm.PersonCredited += OnCredited;
-            frm.PersonSelectionChanged += OnPersonSelectionChanged;
+            ProductGroupsWindow frm = new(productGroupManager.GetAll());
+            frm.ProductGroupAdded += OnProductGroupAdded;
+            frm.ProductGroupDeleted += OnProductGroupDeleted;
             frm.ShowDialog();
         }
 
@@ -332,26 +357,5 @@ namespace CreditKiosk
         /// <param name="sender">Sender object.</param>
         /// <param name="e">Event handler.</param>
         private void ListboxPersons_MouseDoubleClick(object sender, MouseButtonEventArgs e) => OpenPurchase();
-
-        /// <summary>
-        /// Event handler for button deposit is clicked.
-        /// </summary>
-        /// <param name="sender">Sender object.</param>
-        /// <param name="e">Event handler.</param>
-        private void BtnDeposit_Click(object sender, RoutedEventArgs e)
-        {
-            Person selectedPerson = (Person)ListboxPersons.SelectedItem;
-
-            if (selectedPerson == null) return;
-
-            DepositWindow.DepositWindow frm = new(selectedPerson);
-            frm.ShowDialog();
-
-            if (frm.DialogResult != null && (bool)frm.DialogResult && frm.Deposit != null)
-            {
-                transactionManager.Deposit(frm.Deposit);
-            }
-            UpdateLabelBalance();
-        }
     }
 }
