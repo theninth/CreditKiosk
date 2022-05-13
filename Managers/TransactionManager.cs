@@ -1,4 +1,5 @@
-﻿using CreditKiosk.Models;
+﻿using CreditKiosk.Enums;
+using CreditKiosk.Models;
 using System;
 
 namespace CreditKiosk.Managers
@@ -8,6 +9,26 @@ namespace CreditKiosk.Managers
     /// </summary>
     public class TransactionManager
     {
+        private TransactionLogger? transactionLogger;
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        public TransactionManager() { }
+
+        /// <summary>
+        /// Constructor overload for supplying a logger method.
+        /// </summary>
+        /// <param name="logTransaction"></param>
+        public TransactionManager(TransactionLogger logTransaction) => this.transactionLogger = logTransaction;
+
+        /// <summary>
+        /// Delegate to handle logging.
+        /// </summary>
+        /// <param name="transaction">Transaction object.</param>
+        /// <param name="transactionType">The type of transaction.</param>
+        public delegate void TransactionLogger(Transaction transaction, TransactionType transactionType);
+
         /// <summary>
         /// Make a deposit.
         /// </summary>
@@ -19,6 +40,8 @@ namespace CreditKiosk.Managers
                 context.Add(deposit);
                 context.SaveChanges();
             }
+
+            if (transactionLogger != null) transactionLogger(deposit, TransactionType.Deposit);
         }
 
         /// <summary>
@@ -32,6 +55,8 @@ namespace CreditKiosk.Managers
                 context.Add(purchase);
                 context.SaveChanges();
             }
+
+            if (transactionLogger != null) transactionLogger(purchase, TransactionType.Purchase);
         }
 
         /// <summary>
@@ -45,6 +70,8 @@ namespace CreditKiosk.Managers
                 context.Add(credit);
                 context.SaveChanges();
             }
+
+            if (transactionLogger != null) transactionLogger(credit, TransactionType.Credit);
         }
          
         /// <summary>

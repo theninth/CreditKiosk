@@ -1,11 +1,14 @@
 ﻿using CreditKiosk.Events;
+using CreditKiosk.Exceptions;
 using CreditKiosk.History;
+using CreditKiosk.Loggers.Transaction;
 using CreditKiosk.Models;
 using CreditKiosk.Persons;
 using CreditKiosk.ProductGroups;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,20 +26,21 @@ namespace CreditKiosk
         private Managers.TransactionManager transactionManager;
 
         /// <summary>
+        /// Where logs will be stored.
+        /// </summary>
+        private string logDir = Path.Join(
+            Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Lägerkiosk loggar");
+
+        /// <summary>
         /// Constructor
         /// </summary>
         public MainWindow()
         {
             InitializeComponent();
-
-            using (var context = new KioskDbContext())
-            {
-                context.Database.EnsureCreated();
-            }
-
-            productGroupManager = new();
-            personManager = new();
-            transactionManager = new();
+            EnsureDbIsCreate();
+            InitateProductGroupManager();
+            InitiatePersonManager();
+            InitiateTransactionManager();
             UpdateListBoxPerson();
 
             // Run fullscreen in production.
@@ -44,6 +48,46 @@ namespace CreditKiosk
             this.WindowStyle = WindowStyle.None;
             this.WindowState = WindowState.Maximized;
 #endif
+        }
+
+        /// <summary>
+        /// Makes sure database is created.
+        /// </summary>
+        private void EnsureDbIsCreate()
+        {
+            using (var context = new KioskDbContext())
+            {
+                context.Database.EnsureCreated();
+            }
+        }
+
+        /// <summary>
+        /// Initiate ProductGroupManager.
+        /// </summary>
+        private void InitateProductGroupManager() => productGroupManager = new();
+
+        /// <summary>
+        /// Initiate PersonManager.
+        /// </summary>
+        private void InitiatePersonManager() => personManager = new();
+
+        /// <summary>
+        /// Initiate TransactionManager.
+        /// </summary>
+        private void InitiateTransactionManager()
+        {
+            try
+            {
+                var transactionCsvLogger = new TransactionCsvLogger(logDir);
+                transactionManager = new(transactionCsvLogger.Log);
+            }
+            catch (CouldNotCreateLogDirException ex)
+            {
+                string message = $"Fel: \"{ex.Message}\"{Environment.NewLine}{Environment.NewLine}" +
+                    "Programmet kommer fortsätta utan loggning.";
+                MessageBox.Show(message, "Fel!");
+                transactionManager = new();
+            }
         }
 
         /// <summary>
@@ -141,6 +185,7 @@ namespace CreditKiosk
             if (e.Person != null) personManager.Add((Person)e.Person);
             if (e.Person != null && e.InitialDeposit > 0)
             {
+
                 Deposit deposit = new()
                 {
                     PersonId = e.Person.Id,
